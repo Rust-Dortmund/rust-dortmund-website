@@ -13,7 +13,7 @@ pub fn home() -> Html {
         </div>
             <img class="logo" src="./assets/rust.webp" alt="rust do logo"  style="max-width:60vw;height:auto;border-radius:30px" />
             <br />
-            <span class="subtitle">{ "this website is made in Dortmund with " }<span class="heart" /></span>
+            <span class="subtitle">{ "this website is made in Dortmund with " }<span class="heart" />{" and "}<span class="crab" /></span>
         </>
     }
 }

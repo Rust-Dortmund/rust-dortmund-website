@@ -34,9 +34,13 @@ main {
 
 .heart:after {
   content: "❤️";
-
   font-size: 1.75em;
 }
+.crab:after {
+  content: "🦀";
+  font-size: 1.75em;
+}
+
 
 h1 + .subtitle {
   display: block;
