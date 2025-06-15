@@ -1,5 +1,7 @@
 use yew::{function_component, html, Html};
 
+
+
 #[function_component(Secure)]
 pub fn secure() -> Html {
     html! {

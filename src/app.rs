@@ -1,9 +1,9 @@
 use crate::app::Route::Impressum;
-use crate::components::events_list::Upcoming;
-use crate::components::{home::Home, secure::Secure};
+use crate::components::{home::Home, secure::Secure, events::Upcoming};
 use crate::news::NEWS;
 use yew::prelude::*;
 use yew_router::prelude::*;
+use crate::components::events::SingleEvent;
 use crate::events::events;
 
 static IMPRESSUM: &'static str = "Testimpressum In Dortmund";
@@ -23,7 +23,7 @@ pub(crate) enum Route {
     #[at("/upcoming-events")]
     UpcomingEventListRequest,
     #[at("/event/:id")]
-    PastEventsRequest { id: u16 },
+    EventsRequest { id: u16 },
     #[at("/test")]
     Test,
     #[not_found]
@@ -47,9 +47,11 @@ fn switch(routes: Route) -> Html {
                 html!{<div key={name}>{ format!("News: {}", name) }</div>}
             }).collect::<Html>()
         },
-        Route::PastEventsRequest { id } => html! {
-            events().into_iter().filter(|e|{e.id == id as u32}).map(|name| {
-                html!{<div >{ format!("Event: {}", name.title) }</div>}
+        Route::EventsRequest { id } => html! {
+            events().into_iter().filter(|e|{e.id == id as u32}).map(|event| {
+                html! {
+                    <SingleEvent  event={event} />
+                }
             }).collect::<Html>()
         },
         Route::PastEventListRequest => html! {
@@ -72,7 +74,6 @@ pub fn app() -> Html {
         <nav class="header topnav" id="myTopnav">
         <Link<Route> classes={classes!("active")}  to={Route::Home}>{ "Home" }</Link<Route>>
         <Link<Route> to={Route::UpcomingEventListRequest}>{ "Events" }</Link<Route>>
-        <Link<Route> to={Route::NewsListRequest}>{ "News" }</Link<Route>>
         <Link<Route> to={Route::Impressum}>{ "Impressum" }</Link<Route>>
         <a class="icon" id="close"> {" MENU"}</a>
         </nav>
