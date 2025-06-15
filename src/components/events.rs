@@ -1,7 +1,11 @@
-use yew::{function_component, html, Html, Properties};
+use std::sync::Arc;
+use gloo_net::http::Request;
+use yew::{function_component, html, use_effect_with, use_state, Html, HtmlResult, Properties, Suspense};
+use yew::suspense::use_future;
 use yew_router::components::Link;
 use crate::app::Route;
 use crate::events::events;
+use crate::models::_News::title;
 use crate::models::Event;
 
 #[derive(Properties,PartialEq)]
@@ -70,4 +74,28 @@ pub fn secure() -> Html {
             <SingleEvent  event={event.clone()} />
     }
     }).collect::<Html>()
+}
+
+#[function_component(UpcomingFromServer)]
+pub fn secure() -> HtmlResult {
+
+    const URL: &str = "https://en.wikipedia.org/w/api.php?\
+                   action=query&origin=*&format=json&generator=search&\
+                   gsrnamespace=0&gsrlimit=5&gsrsearch='New_England_Patriots'";
+    let res = use_future(|| async { Request::get(URL).send().await?.text().await })?;
+    
+    let result_html = match *res {
+        Ok(ref res) => html! { res },
+        Err(ref failure) => html! {
+                { format!("Error fetching data: {}", failure) }
+        },
+    };
+    return Ok(html!{
+        <div>
+            <h6>{ "Test" }
+                { result_html }
+            </h6>
+        </div>
+    })
+
 }

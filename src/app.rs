@@ -2,8 +2,10 @@ use crate::app::Route::Impressum;
 use crate::components::{home::Home, secure::Secure, events::Upcoming};
 use crate::news::NEWS;
 use yew::prelude::*;
+use yew_oauth2::oauth2::{use_auth_agent, Config, OAuth2};
+use yew_oauth2::prelude::*;
 use yew_router::prelude::*;
-use crate::components::events::SingleEvent;
+use crate::components::events::{SingleEvent, UpcomingFromServer};
 use crate::events::events;
 
 static IMPRESSUM: &'static str = "Testimpressum In Dortmund";
@@ -61,13 +63,23 @@ fn switch(routes: Route) -> Html {
             <Upcoming />
         },
         Route::NotFound => html! { <h1>{ "404" }</h1> },
-        Route::Test => html! {<h1>{ "Test Page" }</h1> },
+        Route::Test => html! {<h1>
+            <Suspense fallback={html! {<h1>{ "Loading..." }</h1>}}>
+            <UpcomingFromServer />
+            </Suspense>
+            </h1> },
         Route::Impressum => html! {<h1>{ IMPRESSUM }</h1> },
     }
 }
 
 #[function_component(App)]
 pub fn app() -> Html {
+    let config = Config::new(
+        "Ov23liMlgSFpPDP7roOX",
+        "https://github.com/login/oauth/authorize",
+        "https://github.com/login/oauth/access_token",
+        
+    );
     html! {
           <BrowserRouter>
         <section class="app">
@@ -78,6 +90,9 @@ pub fn app() -> Html {
         <a class="icon" id="close"> {" MENU"}</a>
         </nav>
         <div class="body">
+         <OAuth2 {config}>
+        <MyApplicationMain />
+        </OAuth2>
         <main>
             <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
         </main>
@@ -86,4 +101,27 @@ pub fn app() -> Html {
         // Rustify this at some point
         </BrowserRouter>
     }
+}
+#[function_component(MyApplicationMain)]
+fn my_app_main() -> Html {
+    let agent = use_auth_agent().expect("Must be nested inside an OAuth2 component");
+
+    let login = use_callback(agent.clone(), |_, agent| {
+        let _ = agent.start_login();
+    });
+    let logout = use_callback(agent, |_, agent| {
+        let _ = agent.logout();
+    });
+
+    html!(
+    <>
+      <Failure><FailureMessage/></Failure>
+      <Authenticated>
+        <button onclick={logout}>{ "Logout" }</button>
+      </Authenticated>
+      <NotAuthenticated>
+        <button onclick={login}>{ "Login" }</button>
+      </NotAuthenticated>
+    </>
+  )
 }

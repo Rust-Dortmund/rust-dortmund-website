@@ -1,4 +1,5 @@
 use yew::{function_component, html, Html};
+use gloo_net::http::Request;
 
 #[function_component(Home)]
 pub fn home() -> Html {
