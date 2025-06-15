@@ -65,6 +65,7 @@ pub fn app() -> Html {
         <Link<Route> classes={classes!("active")}  to={Route::Home}>{ "Home" }</Link<Route>>
         <Link<Route> to={Route::UpcomingEventListRequest}>{ "Events" }</Link<Route>>
         <Link<Route> to={Route::NewsListRequest}>{ "News" }</Link<Route>>
+        <a class="icon" id="close"> {" MENU"}</a>
         </nav>
         <div class="body">
         <main>
@@ -72,6 +73,7 @@ pub fn app() -> Html {
         </main>
         </div>
         </section>
+        // Rustify this at some point
         </BrowserRouter>
     }
 }
