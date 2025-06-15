@@ -6,7 +6,7 @@ mod models;
 mod components {
     pub mod secure;
     pub mod home;
-    pub mod upcoming;
+    pub mod events_list;
 }
 use app::App;
 

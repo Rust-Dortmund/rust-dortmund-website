@@ -1,11 +1,15 @@
+use crate::app::Route::Impressum;
+use crate::components::events_list::Upcoming;
+use crate::components::{home::Home, secure::Secure};
+use crate::news::NEWS;
 use yew::prelude::*;
 use yew_router::prelude::*;
-use crate::news::NEWS;
-use crate::components::{secure::Secure,home::Home};
-use crate::components::upcoming::Upcoming;
+use crate::events::events;
+
+static IMPRESSUM: &'static str = "Testimpressum In Dortmund";
 
 #[derive(Clone, Routable, PartialEq)]
-enum Route {
+pub(crate) enum Route {
     #[at("/")]
     Home,
     #[at("/secure")]
@@ -25,8 +29,9 @@ enum Route {
     #[not_found]
     #[at("/404")]
     NotFound,
+    #[at("/impressum")]
+    Impressum,
 }
-
 
 fn switch(routes: Route) -> Html {
     match routes {
@@ -43,7 +48,9 @@ fn switch(routes: Route) -> Html {
             }).collect::<Html>()
         },
         Route::PastEventsRequest { id } => html! {
-            <h1>{ format!("Past Event {}", id) }</h1>
+            events().into_iter().filter(|e|{e.id == id as u32}).map(|name| {
+                html!{<div >{ format!("Event: {}", name.title) }</div>}
+            }).collect::<Html>()
         },
         Route::PastEventListRequest => html! {
             <h1>{ "Past Events" }</h1>
@@ -52,7 +59,8 @@ fn switch(routes: Route) -> Html {
             <Upcoming />
         },
         Route::NotFound => html! { <h1>{ "404" }</h1> },
-        Route::Test => html!{<h1>{ "Test Page" }</h1> },
+        Route::Test => html! {<h1>{ "Test Page" }</h1> },
+        Route::Impressum => html! {<h1>{ IMPRESSUM }</h1> },
     }
 }
 
@@ -65,6 +73,7 @@ pub fn app() -> Html {
         <Link<Route> classes={classes!("active")}  to={Route::Home}>{ "Home" }</Link<Route>>
         <Link<Route> to={Route::UpcomingEventListRequest}>{ "Events" }</Link<Route>>
         <Link<Route> to={Route::NewsListRequest}>{ "News" }</Link<Route>>
+        <Link<Route> to={Route::Impressum}>{ "Impressum" }</Link<Route>>
         <a class="icon" id="close"> {" MENU"}</a>
         </nav>
         <div class="body">
@@ -77,4 +86,3 @@ pub fn app() -> Html {
         </BrowserRouter>
     }
 }
-

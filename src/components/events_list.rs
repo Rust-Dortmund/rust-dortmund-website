@@ -1,5 +1,7 @@
 use yew::{function_component, html, Html};
+use yew_router::components::Link;
 use crate::events::events;
+use crate::app::Route;
 
 #[function_component(Upcoming)]
 pub fn secure() -> Html {
@@ -11,6 +13,10 @@ pub fn secure() -> Html {
                 <p>{ &event.description }</p>
                 <p>{ format!("Date: {}", event.date) }</p>
                 <p>{ format!("Location: {}", event.location) }</p>
+            <p>
+                <Link<Route> to={Route::PastEventsRequest { id: event.id as u16 }}>
+                    { "View Event" }</Link<Route>>
+            </p>
             <img class="event-image" src={event.image_url} />
             <hr />
             </div>
