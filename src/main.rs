@@ -1,12 +1,12 @@
 mod app;
-mod news;
 mod events;
 mod models;
+mod news;
 
 mod components {
-    pub mod secure;
-    pub mod home;
     pub mod events;
+    pub mod home;
+    pub mod secure;
 }
 use app::App;
 

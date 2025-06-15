@@ -21,8 +21,9 @@ pub struct News {
 }
 #[derive(Properties, Clone, PartialEq)]
 pub(crate) struct Talk {
-    pub(crate) title: String,
-    pub(crate) speaker: &'static str,
-    pub(crate) description: String
+    pub title: String,
+    pub speaker: &'static str,
+    pub description: String,
+    pub video_url: Option<String>,
+    pub slides_url: Option<String>,
 }
-
