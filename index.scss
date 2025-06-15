@@ -8,7 +8,7 @@ html,body{
   flex-direction: column;
   height: 100%;
   color: #fff6d5;
-  font-family: sans-serif;
+  font-family: "Reddit Sans", sans-serif;
   text-align: center;
 }
 
@@ -22,7 +22,11 @@ body{
   display: flex;
   justify-content: center;
   background: linear-gradient(to bottom right, #444444, #009a5b);
-  font-size: 1.5rem;
+  font-size: 1.5rem;#
+  font-family: "Reddit Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-style: normal;
 }
 
 main {
@@ -49,10 +53,6 @@ h1 + .subtitle {
 
 * {box-sizing: border-box;}
 
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
-}
 
 .header {
   position: sticky;
@@ -172,4 +172,11 @@ body {
     color: white;
     padding: 10px 20px;
     margin: 30px 0px;
+}
+
+@font-face {
+  font-family: 'Reddit Sans';
+  font-style: normal;
+  font-weight: 600;
+  src: url('/assets/RedditSans-VariableFont_wght.ttf'); /* IE9 Compat Modes */
 }
