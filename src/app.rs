@@ -2,10 +2,8 @@ use crate::components::events::{RequestTest, SingleEvent};
 use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
-use crate::models::State;
 use yew::prelude::*;
 use yew_router::prelude::*;
-use yewdux::use_store;
 
 static IMPRESSUM: &'static str = "Testimpressum In Dortmund";
 
@@ -64,11 +62,6 @@ fn switch(routes: Route) -> Html {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let (state, _) = use_store::<State>();
-    let mut username = state.user.clone().unwrap_or("Guest".to_string());
-    if state.count > 0 {
-        username = "LOGGED IN USER".to_string();
-    }
     html! {
           <BrowserRouter>
         <section class="app">
@@ -77,8 +70,6 @@ pub fn app() -> Html {
         <Link<Route> to={Route::UpcomingEventListRequest}>{ "Events" }</Link<Route>>
         <Link<Route> to={Route::Impressum}>{ "Impressum" }</Link<Route>>
         <Link<Route> to={Route::Showcase}>{ "Showcase" }</Link<Route>>
-        {state.count}
-        {username}
         <a class="icon" id="close"> {" MENU"}</a>
         </nav>
         <div class="body">
