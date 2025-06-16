@@ -1,0 +1,22 @@
+[package]
+name = "RustDortmundMeetupPage"
+version = "0.1.0"
+edition = "2021"
+description = "Rust Dortmund Meetup Page using Yew and Trunk"
+readme = "README.md"
+license = "MIT"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+[dependencies]
+yew = { version = "0.21", features = ["csr"] }
+yew-router = "0.18.0"
+chrono = "0.4.41"
+gloo-net = "0.6.0"
+wasm-bindgen-futures = "0.4.50"
+gloo = "0.11.0"
+serde_json = "1.0.140"
+yew-oauth2 = { git = "https://github.com/corgijan/yew-oauth2-vendored.git", features = ["google"], branch = "implicit-flow" }
+yewdux = "0.11.0"
+[features]
+default = ["auth"]
+auth = []

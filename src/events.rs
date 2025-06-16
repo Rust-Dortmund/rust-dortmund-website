@@ -1,0 +1,60 @@
+use crate::models::{Event, Talk};
+
+pub fn events() -> Vec<Event> {
+    let mut events = vec![
+        Event {
+            id: 1,
+            title: "TBD".to_string(),
+            description: "".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 7, 23).unwrap(),
+            location: "Dortmund, Germany (more in Meetup)".to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
+            talks: vec![],
+        },
+        Event {
+            id: 2,
+            title: "Talk and Connect - Fullstack".to_string(),
+            description: "".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 5, 20).unwrap(),
+            location: "Dortmund, Germany -  Digitale Werkbank, Kanalstraße 25, 44147 Dortmund"
+                .to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
+            talks: vec![
+                Talk {
+                    title: "Beyond Javascript -- Writing a Web Application Full Stack with Rust",
+                    speaker: "Goetz Markgraf, Consulant Codecentric AG",
+                    description: "Advanced Rust programming techniques.",
+                    video_url: None,
+                    slides_url: None,
+                },
+                Talk {
+                    title: "Build Great Web Experiences with Leptos ",
+                    speaker: "Ben Wishovich, Leptos Core",
+                    description: "Advanced Rust programming techniques.",
+                    video_url: None,
+                    slides_url: None,
+                },
+            ],
+        },
+        Event {
+            id: 3,
+            title: "Rust Dortmund - Teach and Hack".to_string(),
+            description: "".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 3, 11).unwrap(),
+            location:
+                "Dortmund, Germany -Otto-Hahn-Straße 12,44227 Dortmund,Raum 2.063 - 2nd floor "
+                    .to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
+            talks: vec![Talk {
+                title: "Workshop A server/client application with Axum ",
+                speaker: "Timo Kösters",
+                description: "Advanced Rust programming techniques.",
+                video_url: None,
+                slides_url: None,
+            }],
+        },
+    ];
+    events.sort_by_key(|e| e.date);
+    events.reverse();
+    events
+}
