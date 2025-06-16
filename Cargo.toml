@@ -15,5 +15,5 @@ gloo-net = "0.6.0"
 wasm-bindgen-futures = "0.4.50"
 gloo = "0.11.0"
 serde_json = "1.0.140"
-yew-oauth2 = { version = "0.11.0", features = ["openid"] }
+yew-oauth2 = { git = "https://github.com/corgijan/yew-oauth2.git" }
 yewdux = "0.11.0"
