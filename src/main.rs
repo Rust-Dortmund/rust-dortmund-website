@@ -7,6 +7,7 @@ mod components {
     pub mod events;
     pub mod home;
     pub mod secure;
+    pub mod showcase;
 }
 use app::App;
 

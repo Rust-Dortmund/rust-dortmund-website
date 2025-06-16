@@ -1,7 +1,5 @@
 use crate::models::{Event, Talk};
 
-pub static NEWS: [&'static str; 3] = ["First Post", "Second", "Third"];
-
 pub fn events() -> Vec<Event> {
     let mut events = vec![
         Event {

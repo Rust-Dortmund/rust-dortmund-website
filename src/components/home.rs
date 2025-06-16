@@ -1,7 +1,6 @@
-use gloo_net::http::Request;
+use crate::app::Route;
 use yew::{classes, function_component, html, Html};
 use yew_router::prelude::Link;
-use crate::app::Route;
 
 #[function_component(Home)]
 pub fn home() -> Html {

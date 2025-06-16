@@ -1,4 +1,5 @@
 use yew::Properties;
+use yewdux::Store;
 
 #[derive(Properties, Clone, PartialEq)]
 pub struct Event {
@@ -26,4 +27,10 @@ pub(crate) struct Talk {
     pub description: String,
     pub video_url: Option<String>,
     pub slides_url: Option<String>,
+}
+
+#[derive(Default, Clone, PartialEq, Eq, Store)]
+pub struct State {
+    pub count: u32,
+    pub user: Option<String>,
 }

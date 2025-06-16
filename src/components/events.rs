@@ -5,12 +5,6 @@ use gloo_net::http::Request;
 use yew::suspense::use_future;
 use yew::{classes, function_component, html, Html, HtmlResult, Properties};
 use yew_router::components::Link;
-use yewdux::prelude::*;
-
-#[derive(Default, Clone, PartialEq, Eq, Store)]
-struct State {
-    count: u32,
-}
 
 #[derive(Properties, PartialEq)]
 pub struct Props {
@@ -107,14 +101,10 @@ pub fn secure() -> HtmlResult {
                 { format!("Error fetching data: {}", failure) }
         },
     };
-
-    let (state, dispatch) = use_store::<State>();
-    let onclick = dispatch.reduce_mut_callback(|state| state.count += 1);
     return Ok(html! {
         <div>
+
             <h6>{ "Test" }
-        <p>{ state.count }</p>
-        <button {onclick}>{"+1"}</button><br />
                 { result_html }
             </h6>
         </div>

@@ -1,9 +1,9 @@
-html,body{
+html, body {
   height: 100vh;
   margin: 0;
 }
 
-.app{
+.app {
   display: flex;
   flex-direction: column;
   height: 100%;
@@ -12,18 +12,18 @@ html,body{
   text-align: center;
 }
 
-body{
+body {
   background: #444444;
 }
 
-.body{
+.body {
   flex: 1 1 auto;
   align-items: center;
   display: flex;
   justify-content: center;
   background: linear-gradient(to bottom right, #444444, #009a5b);
-  font-size: 1.5rem;#
-  font-family: "Reddit Sans", sans-serif;
+  font-size: 1.5rem;
+# font-family:"Reddit Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
@@ -40,6 +40,7 @@ main {
   content: "❤️";
   font-size: 1.75em;
 }
+
 .crab:after {
   content: "🦀";
   font-size: 1.75em;
@@ -51,7 +52,9 @@ h1 + .subtitle {
   margin-top: -1em;
 }
 
-* {box-sizing: border-box;}
+* {
+  box-sizing: border-box;
+}
 
 
 .header {
@@ -101,7 +104,9 @@ h1 + .subtitle {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -114,6 +119,7 @@ h1 + .subtitle {
     background-color: #333;
   }
 }
+
 .topnav {
   overflow: visible;
   background-color: #333;
@@ -146,7 +152,9 @@ h1 + .subtitle {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {display: none;}
+  .topnav a:not(:first-child) {
+    display: none;
+  }
   .topnav a.icon {
     float: right;
     display: block;
@@ -154,7 +162,9 @@ h1 + .subtitle {
 }
 
 @media screen and (max-width: 600px) {
-  .topnav.responsive {position: relative;}
+  .topnav.responsive {
+    position: relative;
+  }
   .topnav.responsive .icon {
     position: absolute;
     right: 0;
@@ -169,14 +179,15 @@ h1 + .subtitle {
 
 .btn {
   background: #04AA6D;
-    color: white;
-    padding: 10px 20px;
-    margin: 30px 0px;
+  color: white;
+  padding: 10px 20px;
+  margin: 30px 0px;
+  border-radius: 15px;
 }
 
 @font-face {
   font-family: 'Reddit Sans';
   font-style: normal;
   font-weight: 600;
-  src: url('/assets/RedditSans-VariableFont_wght.ttf'); /* IE9 Compat Modes */
+  src: url('./assets/RedditSans-VariableFont_wght.ttf'); /* IE9 Compat Modes */
 }
