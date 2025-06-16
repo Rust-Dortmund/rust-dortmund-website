@@ -31,6 +31,9 @@ jobs:
         with:
           version: 'latest'
 
+      - name: Update base href in index.html
+        run: sed -i 's|<base href=\"/\"/>|<base href=\"/rust-dortmund-website/\"/>|' index.html
+
       - name: Build
         run: trunk build --release --public-url https://corgijan.github.io/rust-dortmund-website/
 
