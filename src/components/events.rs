@@ -31,7 +31,7 @@ pub fn secure(prop: &Props) -> Html {
                     html! {
                         <div class="talk">
                 <div>
-                            <h5>{ &talk.title }
+                            <h5>{ &talk.title } <br />{" - "} { &talk.speaker }
 
                             {if let Some(video_url) = &talk.video_url {
                                 html! {<a href={video_url.clone()} target="_blank">{ " Watch Video " }</a>}
@@ -44,7 +44,8 @@ pub fn secure(prop: &Props) -> Html {
                                 } else {
                                     html! { <span>{ "" }</span> }
                             }
-                            }</h5>
+                            }
+                </h5>
                         </div>
                         </div>
                 }
@@ -75,7 +76,7 @@ pub fn secure(prop: &Props) -> Html {
                 prop.event.talks.iter().map(|talk| {
                     html! {
                     <div>
-                            { format!(" {} by  {} ",talk.title,talk.speaker) }
+                            { format!(" {} - {} ",talk.title,talk.speaker) }
                     </div>
                     }
                 }).collect::<Html>()
@@ -118,7 +119,6 @@ pub fn secure() -> HtmlResult {
     };
     return Ok(html! {
         <div>
-
             <h6>{ "Test" }
                 { result_html }
             </h6>

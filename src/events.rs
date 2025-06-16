@@ -4,42 +4,37 @@ pub fn events() -> Vec<Event> {
     let mut events = vec![
         Event {
             id: 1,
-            title: "First Event".to_string(),
-            description: "Join us for our monthly Rust Dortmund meetup!".to_string(),
-            date: chrono::NaiveDate::from_ymd_opt(2026, 10, 15).unwrap(),
-            location: "Dortmund, Germany".to_string(),
+            title: "TBD".to_string(),
+            description: "".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 7, 23).unwrap(),
+            location: "Dortmund, Germany (more in Meetup)".to_string(),
             image_url: "./assets/janPizza.jpg".to_string(),
-            talks: vec![
-                Talk {
-                    title: "First Talk - Something Interesting".to_string(),
-                    speaker: "John Doe",
-                    description: "An introduction to Rust programming.".to_string(),
-                    video_url: None,
-                    slides_url: Some("https://example.com/slides".to_string()),
-                },
-                Talk {
-                    title: "Second Talk - Something Interesting".to_string(),
-                    speaker: "John Doe",
-                    description: "An introduction to Rust programming.".to_string(),
-                    video_url: None,
-                    slides_url: Some("https://example.com/slides".to_string()),
-                },
-            ],
+            talks: vec![],
         },
         Event {
             id: 2,
-            title: "Second Event".to_string(),
-            description: "Join us for our monthly Rust Dortmund meetup!".to_string(),
-            date: chrono::NaiveDate::from_ymd_opt(2023, 10, 15).unwrap(),
-            location: "Dortmund, Germany".to_string(),
-            image_url: "https://picsum.photos/300/200".to_string(),
-            talks: vec![Talk {
-                title: "Second Talk".to_string(),
-                speaker: "Jane Smith",
-                description: "Advanced Rust programming techniques.".to_string(),
-                video_url: None,
-                slides_url: "https://example.com/slides".to_string().into(),
-            }],
+            title: "Talk and Connect - Fullstack".to_string(),
+            description: "".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 5, 20).unwrap(),
+            location: "Dortmund, Germany -  Digitale Werkbank, Kanalstraße 25, 44147 Dortmund"
+                .to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
+            talks: vec![
+                Talk {
+                    title: "Beyond Javascript -- Writing a Web Application Full Stack with Rust",
+                    speaker: "Goetz Markgraf, Consulant Codecentric AG",
+                    description: "Advanced Rust programming techniques.",
+                    video_url: None,
+                    slides_url: None,
+                },
+                Talk {
+                    title: "Build Great Web Experiences with Leptos ",
+                    speaker: "Ben Wishovich, Leptos Core",
+                    description: "Advanced Rust programming techniques.",
+                    video_url: None,
+                    slides_url: None,
+                },
+            ],
         },
     ];
     events.sort_by_key(|e| e.date);
