@@ -10,7 +10,7 @@ pub fn secure() -> HtmlResult {
         <div>
             <h6>{ "Count :" }
             {state.count}</h6>
-            <button {onclick}>{"+1"}</button>
+            <button {onclick} class="btn"><h1>{"+1"}</h1></button>
             <div>
             <div class="btn">
             <a style="color:white;" href="https://github.com/corgijan/rust-dortmund-website/tree/development/src/components/showcase.rs" target="_blank">

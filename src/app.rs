@@ -3,7 +3,6 @@ use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
 use crate::models::State;
-use crate::news::NEWS;
 use yew::prelude::*;
 use yew_router::prelude::*;
 use yewdux::use_store;
@@ -38,12 +37,10 @@ fn switch(routes: Route) -> Html {
         Route::Home => html! {<Home /> },
         Route::Showcase => html! {<h1><Showcase /></h1> },
         Route::NewsRequest { id } => html! {
-            <h1>{ format!("News {}", NEWS.get(id as usize).unwrap_or(&"Unknown News")) }</h1>
+            <h1>{ format!("News {}",id) }</h1>
         },
         Route::NewsListRequest => html! {
-            NEWS.into_iter().map(|name| {
-                html!{<div key={name}>{ format!("News: {}", name) }</div>}
-            }).collect::<Html>()
+            <h1>{ "News List" }</h1>
         },
         Route::EventsRequest { id } => html! {
             events().into_iter().filter(|e|{e.id == id as u32}).map(|event| {

@@ -1,8 +1,6 @@
 mod app;
 mod events;
 mod models;
-mod news;
-
 mod components {
     pub mod events;
     pub mod home;

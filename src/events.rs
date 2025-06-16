@@ -8,7 +8,7 @@ pub fn events() -> Vec<Event> {
             description: "Join us for our monthly Rust Dortmund meetup!".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2026, 10, 15).unwrap(),
             location: "Dortmund, Germany".to_string(),
-            image_url: "https://picsum.photos/200/300".to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
             talks: vec![
                 Talk {
                     title: "First Talk - Something Interesting".to_string(),

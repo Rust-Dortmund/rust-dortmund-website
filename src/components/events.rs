@@ -22,6 +22,7 @@ pub fn secure(prop: &Props) -> Html {
     };
     html! {
         <div>
+            <img class="event-image" src={event.image_url.clone()} />
             <div class="event" key={event.id}>
                 <h2>{ &event.title }</h2>
                 <p>{ &event.description }</p>
@@ -29,14 +30,28 @@ pub fn secure(prop: &Props) -> Html {
         {            event.talks.iter().map(|talk| {
                     html! {
                         <div class="talk">
-                            <h5>{ &talk.title }</h5>
+                <div>
+                            <h5>{ &talk.title }
+
+                            {if let Some(video_url) = &talk.video_url {
+                                html! {<a href={video_url.clone()} target="_blank">{ " Watch Video " }</a>}
+                                } else {
+                                    html! { <span>{ "" }</span> }
+                            }
+                            }
+                            {if let Some(slides_url) = &talk.slides_url {
+                                html! {<a href={slides_url.clone()} target="_blank">{ " Slides " }</a>}
+                                } else {
+                                    html! { <span>{ "" }</span> }
+                            }
+                            }</h5>
+                        </div>
                         </div>
                 }
                 }
         ).collect::<Html>()
             }
                 <p>{ format!("Location: {}", event.location) }</p>
-            <img class="event-image" src={event.image_url.clone()} />
             </div>
         </div>
     }
@@ -60,7 +75,7 @@ pub fn secure(prop: &Props) -> Html {
                 prop.event.talks.iter().map(|talk| {
                     html! {
                     <div>
-                            { format!(" {} by  {}",talk.title,talk.speaker) }
+                            { format!(" {} by  {} ",talk.title,talk.speaker) }
                     </div>
                     }
                 }).collect::<Html>()
