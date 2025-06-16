@@ -34,6 +34,7 @@ pub fn store() -> HtmlResult {
         </div>
     })
 }
+
 #[function_component(UseState)]
 fn state() -> Html {
     let counter = use_state(|| 0);

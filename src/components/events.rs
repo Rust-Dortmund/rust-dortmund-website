@@ -67,8 +67,10 @@ pub fn secure(prop: &Props) -> Html {
         format!("Past Event: {}", prop.event.date)
     };
     html! {
+
         <div>
-            <h1>{ &prop.event.title }</h1>
+            <h1>{ "Events Of Rust Dortmund IRL Meetup" }</h1>
+            <h2>{ &prop.event.title }</h2>
             <h3>{ date_text }</h3>
             <p>{ &prop.event.description }</p>
         <p>
