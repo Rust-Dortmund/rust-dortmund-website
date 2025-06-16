@@ -46,5 +46,5 @@ pub fn events() -> Vec<Event> {
     ];
     events.sort_by_key(|e| e.date);
     events.reverse();
-    return events;
+    events
 }

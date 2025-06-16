@@ -1,7 +1,11 @@
 # Rust IRL Meetup Dortmund Website
 A website for the Rust IRL Meetup Dortmund, built with [Yew] and [Trunk].
 
+### https://corgijan.github.io/rust-dortmund-website/
+
 ### Installation
+
+
 
 If you don't already have it installed, it's time to install Rust: <https://www.rust-lang.org/tools/install>.
 The rest of this guide assumes a typical Rust installation which contains both `rustup` and Cargo.
