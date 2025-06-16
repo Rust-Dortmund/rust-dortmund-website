@@ -5,7 +5,7 @@ use crate::events::events;
 use yew::prelude::*;
 use yew_router::prelude::*;
 
-static IMPRESSUM: &'static str = "Testimpressum In Dortmund";
+static IMPRESSUM: &'static str = "Impressum";
 
 #[derive(Clone, Routable, PartialEq)]
 pub(crate) enum Route {
@@ -56,7 +56,11 @@ fn switch(routes: Route) -> Html {
         <RequestTest />
         </Suspense>
         </h1> },
-        Route::Impressum => html! {<h1>{ IMPRESSUM }</h1> },
+        Route::Impressum => html! {<h1>
+            <a href="https://www.corgi.wiki/impressum" target="_blank" rel="noopener noreferrer">
+        { IMPRESSUM }
+            </a>
+        </h1> },
     }
 }
 
