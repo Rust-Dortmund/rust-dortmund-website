@@ -2,6 +2,7 @@ use crate::components::events::{RequestTest, SingleEvent};
 use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
+use gloo::storage::Storage;
 use gloo_net::http::Request;
 use yew::prelude::*;
 use yew::suspense::use_future;
@@ -36,7 +37,7 @@ pub(crate) enum Route {
 
 fn switch(routes: Route) -> Html {
     match routes {
-        Route::Home => html! {<Home /> },
+        Route::Home => html! {<Suspense> <Home /> </Suspense>},
         Route::Showcase => html! {<h1><Showcase /></h1> },
         Route::NewsRequest { id } => html! {
             <h1>{ format!("News {}",id) }</h1>
@@ -70,10 +71,11 @@ fn switch(routes: Route) -> Html {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let mut config = Config::new(
+    let config = Config::new(
         "363680698182-7e65kptgveqmtsmnd62t74tcopo28sl5.apps.googleusercontent.com",
         "https://accounts.google.com/o/oauth2/v2/auth",
         "https://accounts.google.com/o/oauth2/token",
+        //"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",
     );
 
     html! {
@@ -121,9 +123,8 @@ fn dummy() -> Authentication {
     Authentication {
         access_token: "".to_string(),
         refresh_token: None,
-        #[cfg(feature = "openid")]
-        claims: None,
         expires: None,
+        //client_secret: None,
     }
 }
 
@@ -190,7 +191,6 @@ fn my_app_main() -> Html {
         let url = "http://localhost:8080/".parse().unwrap();
         let mut opts = LoginOptions::default();
         opts.redirect_url = Some(url);
-
         let _ = agent.start_login_opts(opts).unwrap();
     });
     let logout = use_callback(agent, |_, agent| {
