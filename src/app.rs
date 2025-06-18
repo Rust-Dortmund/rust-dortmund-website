@@ -1,7 +1,10 @@
 use crate::components::events::{RequestTest, SingleEvent};
+use crate::components::home::Authcheck;
 use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
+use gloo::console::console;
+use gloo::storage::{LocalStorage, Storage};
 use gloo_net::http::Request;
 use yew::prelude::*;
 use yew::suspense::use_future;
@@ -36,7 +39,8 @@ pub(crate) enum Route {
 
 fn switch(routes: Route) -> Html {
     match routes {
-        Route::Home => html! {<Home /> },
+        Route::Home => html! {
+        <><Home /> <Suspense><Authcheck /></Suspense></>},
         Route::Showcase => html! {<h1><Showcase /></h1> },
         Route::NewsRequest { id } => html! {
             <h1>{ format!("News {}",id) }</h1>
@@ -70,10 +74,11 @@ fn switch(routes: Route) -> Html {
 
 #[function_component(App)]
 pub fn app() -> Html {
-    let mut config = Config::new(
+    let config = Config::new(
         "363680698182-7e65kptgveqmtsmnd62t74tcopo28sl5.apps.googleusercontent.com",
         "https://accounts.google.com/o/oauth2/v2/auth",
         "https://accounts.google.com/o/oauth2/token",
+        "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",
     );
 
     html! {
@@ -124,6 +129,7 @@ fn dummy() -> Authentication {
         #[cfg(feature = "openid")]
         claims: None,
         expires: None,
+        client_secret: None,
     }
 }
 
@@ -146,40 +152,53 @@ pub struct AuthProps {
 
 #[function_component(ViewAuthInfo)]
 pub fn view_auth(props: &AuthProps) -> HtmlResult {
+    let auth = use_context::<OAuth2Context>();
     let token = props.auth.access_token.clone();
-    const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
-    let res = use_future(|| async move {
-        Request::get(URL)
-            .header("Authorization", &format!("Bearer {}", token))
-            .send()
-            .await?
-            .text()
-            .await
-    })?;
+    LocalStorage::set("corgijan/oauth2token", &token).ok();
 
-    let result_html = match *res {
-        Ok(ref res) => html! { res },
-        Err(ref failure) => html! {
-                { format!("Error fetching data: {}", failure) }
-        },
-    };
+    let token_from_storage: Result<Option<String>, _> =
+        gloo::storage::LocalStorage::get("corgijan/oauth2token");
+    let token2 = gloo::storage::LocalStorage::get("corgijan/oauth2token");
+    console!(token2
+        .unwrap_or(Some("".to_string()))
+        .unwrap_or("No token found".to_string()));
+    if let Ok(Some(token)) = token_from_storage {
+        if let Some(auth) = auth {
+            if let OAuth2Context::Authenticated(_) = auth {
+                console!(format!("Token from storage: {}", token));
+            } else {
+            }
+        }
+        return Ok(html! { <p>{ format!("Token from storage: {}", token) }</p> });
+    }
+    //return Ok(html! { <p>{ "Not authenticated" }</p> });
+
     Ok(html!(
         <dl>
             <dt> { "Context" } </dt>
             <dd>
                 <code><pre>
                     { format!("{:#?}", props.auth) }
-                    { result_html }
                 </pre></code>
             </dd>
         </dl>
     ))
 }
+
 #[derive(Clone, Debug, PartialEq, Properties)]
 pub struct ContextProps {
     pub auth: OAuth2Context,
 }
 
+#[cfg(not(feature = "auth"))]
+#[function_component(MyApplicationMain)]
+fn my_app_main() -> Html {
+    html!(
+      <>
+      </>
+    )
+}
+#[cfg(feature = "auth")]
 #[function_component(MyApplicationMain)]
 fn my_app_main() -> Html {
     let agent = use_auth_agent().expect("Must be nested inside an OAuth2 component");
@@ -190,7 +209,6 @@ fn my_app_main() -> Html {
         let url = "http://localhost:8080/".parse().unwrap();
         let mut opts = LoginOptions::default();
         opts.redirect_url = Some(url);
-
         let _ = agent.start_login_opts(opts).unwrap();
     });
     let logout = use_callback(agent, |_, agent| {
@@ -201,11 +219,10 @@ fn my_app_main() -> Html {
       <>
         <Failure><FailureMessage/></Failure>
         <Authenticated>
-          <button onclick={logout}>{ "Logout" }</button>
+          <a onclick={logout}>{ "Logout" }</a>
         </Authenticated>
         <NotAuthenticated>
-          <button onclick={login}>{ "Login" }</button>
-
+          <a onclick={login}>{ "Login" }</a>
         </NotAuthenticated>
       </>
     )
