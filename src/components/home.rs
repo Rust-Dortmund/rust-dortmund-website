@@ -11,7 +11,7 @@ pub fn home() -> HtmlResult {
     const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
     let res = use_future(|| async move {
         Request::get(URL)
-            .header("Authorization", &format!("Bearer {}", "ya29.a0AW4XtxiMV6OTjlVwqpZt3ZcTyOLj-miIl2M29ZHtRxE8vDo9izK5VHdgqiXcvjsuOwtXEyCxpLOkIx7NKQ0UuM9QzsbeXuaGb9pK5gV_EFlr05Ircy6uR9DpnUycGxmG7Vt-sey3EiksS8wSckXaPobeVweaLYCE3jR4gm8x2gaCgYKAcwSARUSFQHGX2Mi-A67pfAxJcMhPTB7mblMeQ0177"))
+            .header("Authorization", &format!("Bearer {}", ""))
             .send()
             .await?
             .text()
@@ -19,7 +19,9 @@ pub fn home() -> HtmlResult {
     })?;
 
     let result_html = match *res {
-        Ok(ref res) => html! { res },
+        Ok(ref res) => html! {
+            res
+        },
         Err(ref failure) => html! {
                 { format!("Error fetching data: {}", failure) }
         },
