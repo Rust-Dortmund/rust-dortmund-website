@@ -35,7 +35,7 @@ jobs:
         run: sed -i 's|<base href=\"/\"/>|<base href=\"/rust-dortmund-website/\"/>|' index.html
 
       - name: Build
-        run: trunk build --release --public-url https://corgijan.github.io/rust-dortmund-website/
+        run: trunk build --release --no-default-features
 
       - name: Run tests
         run: cargo test --verbose
