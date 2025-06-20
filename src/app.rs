@@ -1,9 +1,8 @@
 use crate::components::events::{RequestTest, SingleEvent};
-use crate::components::home::Authcheck;
 use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
-use gloo::console::console;
+use gloo::console::{console, log};
 use gloo::storage::{LocalStorage, Storage};
 use gloo_net::http::Request;
 use yew::prelude::*;
@@ -40,7 +39,7 @@ pub(crate) enum Route {
 fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! {
-        <><Home /> <Suspense><Authcheck /></Suspense></>},
+        <><Home /></>},
         Route::Showcase => html! {<h1><Showcase /></h1> },
         Route::NewsRequest { id } => html! {
             <h1>{ format!("News {}",id) }</h1>
@@ -77,8 +76,6 @@ pub fn app() -> Html {
     let config = Config::new(
         "363680698182-7e65kptgveqmtsmnd62t74tcopo28sl5.apps.googleusercontent.com",
         "https://accounts.google.com/o/oauth2/v2/auth",
-        "https://accounts.google.com/o/oauth2/token",
-        "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",
     );
 
     html! {
@@ -99,8 +96,8 @@ pub fn app() -> Html {
         <div class="body">
         <main>
           <UseAuthentication<ViewUseAuth>>
-                                <ViewUseAuth/>
-                            </UseAuthentication<ViewUseAuth>>
+            <ViewUseAuth/>
+          </UseAuthentication<ViewUseAuth>>
             <Switch<Route> render={switch} /> // <- must be child of <BrowserRouter>
         </main>
         </div>
@@ -126,10 +123,7 @@ fn dummy() -> Authentication {
     Authentication {
         access_token: "".to_string(),
         refresh_token: None,
-        #[cfg(feature = "openid")]
-        claims: None,
         expires: None,
-        client_secret: None,
     }
 }
 
@@ -137,7 +131,6 @@ fn dummy() -> Authentication {
 pub fn view_use_auth(props: &Props) -> Html {
     html!(
         <>
-            <h2> { "Use authentication example"} </h2>
             <Suspense fallback={html! {<h1>{ "Loading..." }</h1>}}>
             <ViewAuthInfo auth={props.auth.clone()} />
         </Suspense>
@@ -155,33 +148,39 @@ pub fn view_auth(props: &AuthProps) -> HtmlResult {
     let auth = use_context::<OAuth2Context>();
     let token = props.auth.access_token.clone();
     LocalStorage::set("corgijan/oauth2token", &token).ok();
+    log!(format!("Token set in storage: {}", &token));
 
     let token_from_storage: Result<Option<String>, _> =
         gloo::storage::LocalStorage::get("corgijan/oauth2token");
-    let token2 = gloo::storage::LocalStorage::get("corgijan/oauth2token");
-    console!(token2
-        .unwrap_or(Some("".to_string()))
-        .unwrap_or("No token found".to_string()));
-    if let Ok(Some(token)) = token_from_storage {
-        if let Some(auth) = auth {
-            if let OAuth2Context::Authenticated(_) = auth {
-                console!(format!("Token from storage: {}", token));
-            } else {
-            }
-        }
-        return Ok(html! { <p>{ format!("Token from storage: {}", token) }</p> });
-    }
-    //return Ok(html! { <p>{ "Not authenticated" }</p> });
 
+    const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
+    let res = use_future(|| async move {
+        Request::get(URL)
+            .header("Authorization", &format!("Bearer {}", token))
+            .send()
+            .await?
+            .text()
+            .await
+    })?;
+
+    let result_html = match *res {
+        Ok(ref res) => {
+            let json: serde_json::Value = serde_json::from_str(res).unwrap_or_default();
+            let name = json
+                .get("name")
+                .and_then(|n| n.as_str())
+                .unwrap_or("Unknown");
+            return Ok(html! {
+                <p>{format!("You are Authenticated {name}")}</p>
+            });
+        }
+        Err(ref failure) => html! {
+                { format!("Error fetching data: {}", failure) }
+        },
+    };
     Ok(html!(
-        <dl>
-            <dt> { "Context" } </dt>
-            <dd>
-                <code><pre>
-                    { format!("{:#?}", props.auth) }
-                </pre></code>
-            </dd>
-        </dl>
+        <>
+        </>
     ))
 }
 
@@ -217,7 +216,6 @@ fn my_app_main() -> Html {
 
     html!(
       <>
-        <Failure><FailureMessage/></Failure>
         <Authenticated>
           <a onclick={logout}>{ "Logout" }</a>
         </Authenticated>
