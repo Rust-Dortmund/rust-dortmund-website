@@ -11,7 +11,7 @@ pub fn home() -> HtmlResult {
     const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
     let res = use_future(|| async move {
         Request::get(URL)
-            .header("Authorization", &format!("Bearer {}", ""))
+            .header("Authorization", &format!("Bearer {}", "ya29.a0AW4XtxgWMd3Pzjm0pAkDnhYYWO6PGeJFTRMhY1g_IgR5HTIYnE_OquscnxINqVk5jZIlMGvATQl8DjBtD4sPoVOnDzJuDo4ztVM0kThmXA_EePi9aQuaqRudq_TXYqGJ0frz8TbfbQ1YlpiV6YqR_V6Y4FNaFxtiETKrKiN0VQaCgYKAUUSARUSFQHGX2MicsPay1kd6o83qoBeYJ2B7Q0177"))
             .send()
             .await?
             .text()
