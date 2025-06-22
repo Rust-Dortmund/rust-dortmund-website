@@ -1,17 +1,16 @@
+use crate::components::auth::MyApplicationMain;
+use crate::components::auth::ViewUseAuth;
 use crate::components::events::{RequestTest, SingleEvent};
 use crate::components::showcase::Showcase;
 use crate::components::{events::Upcoming, home::Home};
 use crate::events::events;
-use gloo::console::{console, log};
-use gloo::storage::{LocalStorage, Storage};
-use gloo_net::http::Request;
 use yew::prelude::*;
-use yew::suspense::use_future;
-use yew_oauth2::oauth2::{use_auth_agent, Config, OAuth2};
+use yew::Html;
+use yew_oauth2::oauth2::{Config, OAuth2};
 use yew_oauth2::prelude::*;
 use yew_router::prelude::*;
 
-static IMPRESSUM: &'static str = "Impressum";
+static IMPRESSUM: &str = "Impressum";
 
 #[derive(Clone, Routable, PartialEq)]
 pub(crate) enum Route {
@@ -90,7 +89,7 @@ pub fn app() -> Html {
         <Link<Route> to={Route::UpcomingEventListRequest}>{ "Events" }</Link<Route>>
         <Link<Route> to={Route::Impressum}>{ "Impressum" }</Link<Route>>
         <Link<Route> to={Route::Showcase}>{ "Showcase" }</Link<Route>>
-            <MyApplicationMain  />
+        <MyApplicationMain  />
         <a class="icon" id="close"> {" MENU"}</a>
         </nav>
         <div class="body">
@@ -106,122 +105,4 @@ pub fn app() -> Html {
         </OAuth2>
         </BrowserRouter>
     }
-}
-#[derive(Clone, Debug, PartialEq, Properties)]
-pub struct Props {
-    #[prop_or(dummy())]
-    pub auth: Authentication,
-}
-
-impl UseAuthenticationProperties for Props {
-    fn set_authentication(&mut self, auth: Authentication) {
-        self.auth = auth;
-    }
-}
-
-fn dummy() -> Authentication {
-    Authentication {
-        access_token: "".to_string(),
-        refresh_token: None,
-        expires: None,
-    }
-}
-
-#[function_component(ViewUseAuth)]
-pub fn view_use_auth(props: &Props) -> Html {
-    html!(
-        <>
-            <Suspense fallback={html! {<h1>{ "Loading..." }</h1>}}>
-            <ViewAuthInfo auth={props.auth.clone()} />
-        </Suspense>
-        </>
-    )
-}
-
-#[derive(Clone, Debug, PartialEq, Properties)]
-pub struct AuthProps {
-    pub auth: Authentication,
-}
-
-#[function_component(ViewAuthInfo)]
-pub fn view_auth(props: &AuthProps) -> HtmlResult {
-    let auth = use_context::<OAuth2Context>();
-    let token = props.auth.access_token.clone();
-    LocalStorage::set("corgijan/oauth2token", &token).ok();
-    log!(format!("Token set in storage: {}", &token));
-
-    let token_from_storage: Result<Option<String>, _> =
-        gloo::storage::LocalStorage::get("corgijan/oauth2token");
-
-    const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
-    let res = use_future(|| async move {
-        Request::get(URL)
-            .header("Authorization", &format!("Bearer {}", token))
-            .send()
-            .await?
-            .text()
-            .await
-    })?;
-
-    let result_html = match *res {
-        Ok(ref res) => {
-            let json: serde_json::Value = serde_json::from_str(res).unwrap_or_default();
-            let name = json
-                .get("name")
-                .and_then(|n| n.as_str())
-                .unwrap_or("Unknown");
-            return Ok(html! {
-                <p>{format!("You are Authenticated {name}")}</p>
-            });
-        }
-        Err(ref failure) => html! {
-                { format!("Error fetching data: {}", failure) }
-        },
-    };
-    Ok(html!(
-        <>
-        </>
-    ))
-}
-
-#[derive(Clone, Debug, PartialEq, Properties)]
-pub struct ContextProps {
-    pub auth: OAuth2Context,
-}
-
-#[cfg(not(feature = "auth"))]
-#[function_component(MyApplicationMain)]
-fn my_app_main() -> Html {
-    html!(
-      <>
-      </>
-    )
-}
-#[cfg(feature = "auth")]
-#[function_component(MyApplicationMain)]
-fn my_app_main() -> Html {
-    let agent = use_auth_agent().expect("Must be nested inside an OAuth2 component");
-    let agent = agent.clone();
-
-    let login = use_callback(agent.clone(), |_, agent| {
-        //set scope
-        let url = "http://localhost:8080/".parse().unwrap();
-        let mut opts = LoginOptions::default();
-        opts.redirect_url = Some(url);
-        let _ = agent.start_login_opts(opts).unwrap();
-    });
-    let logout = use_callback(agent, |_, agent| {
-        let _ = agent.logout();
-    });
-
-    html!(
-      <>
-        <Authenticated>
-          <a onclick={logout}>{ "Logout" }</a>
-        </Authenticated>
-        <NotAuthenticated>
-          <a onclick={login}>{ "Login" }</a>
-        </NotAuthenticated>
-      </>
-    )
 }

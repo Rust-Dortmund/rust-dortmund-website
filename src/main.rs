@@ -2,6 +2,7 @@ mod app;
 mod events;
 mod models;
 mod components {
+    pub mod auth;
     pub mod events;
     pub mod home;
     pub mod secure;
