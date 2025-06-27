@@ -1,0 +1,9 @@
+[package]
+name = "example-backend"
+edition.workspace = true
+version.workspace = true
+license.workspace = true
+
+[dependencies]
+axum.workspace = true
+tokio.workspace = true

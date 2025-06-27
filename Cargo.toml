@@ -1,6 +1,6 @@
 [workspace]
-members = ["frontend-yew"]
-default-members = ["frontend-yew"]
+members = ["frontend-yew", "backend/example"]
+default-members = ["backend/example"]
 resolver = "3"
 
 [workspace.package]
@@ -12,3 +12,6 @@ license = "MIT OR Apache-2.0"
 readme = "README.md"
 
 [workspace.dependencies]
+axum = { version = "0.8.4", features = ["json"] }
+serde = { version = "1.0.219", features = ["derive"] }
+tokio = { version = "1.45.1", features = ["full"] }
