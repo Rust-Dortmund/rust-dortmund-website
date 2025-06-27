@@ -13,5 +13,14 @@ readme = "README.md"
 
 [workspace.dependencies]
 axum = { version = "0.8.4", features = ["json"] }
+chrono = "0.4.41"
+gloo = "0.11.0"
+gloo-net = "0.6.0"
 serde = { version = "1.0.219", features = ["derive"] }
+serde_json = "1.0.140"
 tokio = { version = "1.45.1", features = ["full"] }
+wasm-bindgen-futures = "0.4.50"
+yew = { version = "0.21", features = ["csr"] }
+yewdux = "0.11.0"
+yew-oauth2 = { git = "https://github.com/corgijan/yew-oauth2-vendored.git", features = ["google"], branch = "implicit-flow" }
+yew-router = "0.18.0"
