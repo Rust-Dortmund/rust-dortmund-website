@@ -1,0 +1,5 @@
+# We default to frontend-yew
+
+[build]
+# The index HTML file to drive the bundling process.
+target = "frontend-yew/index.html"

@@ -1,0 +1,5 @@
+# We serve the dist folder to root, as yew is the frontend that get's published to gh-pages
+
+[build]
+# The output dir for all final assets.
+dist = "../dist"
