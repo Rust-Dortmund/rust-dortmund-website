@@ -90,7 +90,7 @@ pub fn app() -> Html {
         <Link<Route> to={Route::Impressum}>{ "Impressum" }</Link<Route>>
         <Link<Route> to={Route::Showcase}>{ "Showcase" }</Link<Route>>
         <MyApplicationMain  />
-        <a class="icon" id="close"> {" MENU"}</a>
+        <a class="icon" id="close"> {"MENU"}</a>
         </nav>
         <div class="body">
         <main>
