@@ -1,6 +1,8 @@
 mod app;
 mod events;
 mod models;
+pub mod nav;
+
 mod components {
     pub mod auth;
     pub mod events;

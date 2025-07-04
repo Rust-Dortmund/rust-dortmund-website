@@ -1,4 +1,4 @@
-use crate::app::Route;
+use crate::nav::Route;
 use crate::events::events;
 use crate::models::Event;
 use gloo_net::http::Request;
