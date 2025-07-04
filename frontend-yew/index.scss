@@ -1,5 +1,5 @@
 @font-face {
-  font-family: 'Reddit Sans';
+  font-family: 'Open Sans';
   font-style: normal;
   font-weight: 600;
   src: url('./assets/RedditSans-VariableFont_wght.ttf'); /* IE9 Compat Modes */
@@ -15,13 +15,13 @@ html, body {
   display: flex;
   flex-direction: column;
   height: 100%;
-  color: #fff6d5;
-  font-family: "Reddit Sans", sans-serif;
+  color: #Fff;
+  font-family: "Open Sans", sans-serif;
   text-align: center;
 }
 
 body {
-  background: #444444;
+  background: #682E1A;
 }
 
 .body {
@@ -29,9 +29,9 @@ body {
   align-items: center;
   display: flex;
   justify-content: center;
-  background: linear-gradient(to bottom right, #313131, #e38140);
+  background: linear-gradient(to bottom right, #682E1A, #E58339);
   font-size: 1.5rem;
-# font-family:"Reddit Sans", sans-serif;
+  font-family:"Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
@@ -93,7 +93,7 @@ h1 + .subtitle {
 }
 
 .header a.active {
-  background-color: #009a5b;
+  background-color: #E58339;
   color: white;
 }
 
@@ -153,7 +153,7 @@ h1 + .subtitle {
 }
 
 .topnav a.active {
-  background-color: #04AA6D;
+  background-color: #E58339;
   color: white;
 }
 
@@ -188,7 +188,7 @@ h1 + .subtitle {
 }
 
 .btn {
-  background: #04AA6D;
+  background: #E58339;
   color: white;
   padding: 10px 20px;
   border-radius: 15px;
