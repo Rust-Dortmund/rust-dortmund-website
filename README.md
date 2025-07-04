@@ -5,7 +5,7 @@ A website for the Rust IRL Meetup Dortmund, built with [Yew](https://yew.rs/) an
 For now the website completely uses client side rendering (CSR). That means the website is static and can be deployed
 by simply copying the files in the `dist` folder.
 
-To see a live version visit: https://corgijan.github.io/rust-dortmund-website/
+To see a live version visit: https://rust-dortmund.github.io/rust-dortmund-website/
 
 ## Installation
 
