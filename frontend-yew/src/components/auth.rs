@@ -56,7 +56,7 @@ pub fn view_auth(props: &AuthProps) -> HtmlResult {
         const URL: &str = "https://www.googleapis.com/oauth2/v3/userinfo";
         let res = use_future(|| async move {
             Request::get(URL)
-                .header("Authorization", &format!("Bearer {}", token))
+                .header("Authorization", &format!("Bearer {token}"))
                 .send()
                 .await?
                 .text()
@@ -111,7 +111,7 @@ pub fn my_app_main() -> Html {
         let url = "http://localhost:8080/".parse().unwrap();
         let mut opts = LoginOptions::default();
         opts.redirect_url = Some(url);
-        let _ = agent.start_login_opts(opts).unwrap();
+        agent.start_login_opts(opts).expect("Failed to start login");
     });
     let logout = use_callback(agent, |_, agent| {
         let _ = agent.logout();
