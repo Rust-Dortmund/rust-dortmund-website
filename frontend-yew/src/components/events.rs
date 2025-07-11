@@ -1,9 +1,9 @@
-use crate::nav::Route;
 use crate::events::events;
 use crate::models::Event;
+use crate::nav::Route;
 use gloo_net::http::Request;
 use yew::suspense::use_future;
-use yew::{classes, function_component, html, Html, HtmlResult, Properties};
+use yew::{Html, HtmlResult, Properties, classes, function_component, html};
 use yew_router::components::Link;
 
 #[derive(Properties, PartialEq)]

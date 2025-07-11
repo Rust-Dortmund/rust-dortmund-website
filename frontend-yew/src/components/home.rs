@@ -1,6 +1,6 @@
-use crate::nav::Route;
 use crate::models::State;
-use yew::{classes, function_component, html, Html};
+use crate::nav::Route;
+use yew::{Html, classes, function_component, html};
 use yew_router::prelude::*;
 use yewdux::use_store;
 

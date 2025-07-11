@@ -1,7 +1,7 @@
 use strum::IntoEnumIterator;
+use yew::Html;
 use yew::prelude::*;
 use yew_router::prelude::*;
-use yew::Html;
 
 use crate::components::events::{RequestTest, SingleEvent};
 use crate::components::showcase::Showcase;

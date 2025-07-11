@@ -1,9 +1,9 @@
 use gloo::net::http::Request;
 use yew::suspense::use_future;
-use yew::{function_component, html, use_callback, Html, HtmlResult, Properties, Suspense};
+use yew::{Html, HtmlResult, Properties, Suspense, function_component, html, use_callback};
 use yew_oauth2::agent::{LoginOptions, OAuth2Client, OAuth2Operations};
-use yew_oauth2::components::context::{use_auth_agent, Agent};
 use yew_oauth2::components::UseAuthenticationProperties;
+use yew_oauth2::components::context::{Agent, use_auth_agent};
 use yew_oauth2::context::{Authentication, OAuth2Context};
 use yew_oauth2::prelude::{Authenticated, NotAuthenticated};
 

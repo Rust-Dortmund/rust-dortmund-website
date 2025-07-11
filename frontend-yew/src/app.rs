@@ -2,8 +2,8 @@ use crate::components::auth::MyApplicationMain;
 use crate::components::auth::ViewUseAuth;
 use crate::nav::{NavBar, Route, switch};
 
-use yew::prelude::*;
 use yew::Html;
+use yew::prelude::*;
 use yew_oauth2::oauth2::{Config, OAuth2};
 use yew_oauth2::prelude::*;
 use yew_router::prelude::*;

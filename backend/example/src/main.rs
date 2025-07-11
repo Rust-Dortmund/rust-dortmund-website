@@ -1,4 +1,4 @@
-use axum::{routing::get, Router};
+use axum::{Router, routing::get};
 
 #[tokio::main]
 async fn main() {
@@ -11,7 +11,9 @@ async fn main() {
     let port = 3000; // default port for the example backend
 
     // run our app with hyper, listening globally on port 3000
-    let listener = tokio::net::TcpListener::bind(format!("{ip}:{port}")).await.unwrap();
+    let listener = tokio::net::TcpListener::bind(format!("{ip}:{port}"))
+        .await
+        .unwrap();
     println!("Listening on http://{}", listener.local_addr().unwrap());
     axum::serve(listener, app).await.unwrap();
 }

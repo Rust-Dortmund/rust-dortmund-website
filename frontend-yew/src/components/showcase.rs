@@ -1,5 +1,5 @@
 use crate::models::State;
-use yew::{function_component, html, use_state, Callback, Html, HtmlResult};
+use yew::{Callback, Html, HtmlResult, function_component, html, use_state};
 use yewdux::prelude::*;
 
 #[function_component(Showcase)]
