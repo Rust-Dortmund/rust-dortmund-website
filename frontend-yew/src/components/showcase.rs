@@ -7,7 +7,7 @@ pub fn secure() -> HtmlResult {
     Ok(html! {
         <div>
             <div class="btn">
-            <a style="color:white;" href="https://github.com/corgijan/rust-dortmund-website/tree/development/src/components/showcase.rs" target="_blank">
+            <a style="color:white;" href="https://github.com/rust-dortmund/rust-dortmund-website/tree/main/src/components/showcase.rs" target="_blank">
                 { "Take a Look at the component on GitHub " }
             </a>
             </div>
