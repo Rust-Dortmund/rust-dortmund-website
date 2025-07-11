@@ -24,8 +24,14 @@ jobs:
           override: true
           profile: minimal
 
+      - name: Get PR Number
+        id: get-pr-number
+        run: |
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "pull_number=$pull_number" >> $GITHUB_OUTPUT            
+
       - name: Update base href in index.html
-        run: sed -i 's|<base href=\"/\"/>|<base href=\"/rust-dortmund-website/\"/>|' frontend-yew/index.html
+        run: sed -i 's|<base href=\"/\"/>|<base href=\"/pr-preview/pr-${{ steps.get-pr-number.outputs.pull_number }}/\"/>|' frontend-yew/index.html
 
       - name: Install trunk
         uses: jetli/trunk-action@v0.5.0
@@ -33,16 +39,14 @@ jobs:
           version: 'latest'
 
       - name: Build
-        run: |
-            pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
-            echo "PR Number:$pull_number"
-            trunk build --release --public-url https://rust-dortmund.github.io/rust-dortmund-website/pr-preview/pr-$poll_number --no-default-features
+        run: trunk build --release --public-url https://rust-dortmund.de/pr-preview/pr-${{ steps.get-pr-number.outputs.pull_number }} --no-default-features
 
       - name: Deploy preview
         id: deploy_preview
         uses: rossjrw/pr-preview-action@v1
         with:
           source-dir: ./dist
+          pages-base-url: rust-dortmund.de
 
       - name: Report Preview Deploy
         run: |
