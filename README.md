@@ -55,8 +55,8 @@ To contribute to the Rust Dortmund Community Website you shall use a PR workflow
 
 0. See if you want to work on an open issue or if you want to raise a new one for discussion.
 1. Clone the Repository.
-2. Create you own branch, e.g. `new-feature`.
-3. When finished with you contribution: Push that branch.
+2. Create your own branch, e.g. `new-feature`.
+3. When finished with your contribution: Push that branch.
 4. Open the GitHub page and create a PR for review.
 
 For the PR to be merged it has to be reviewed and approved by either Tim or Jan.
