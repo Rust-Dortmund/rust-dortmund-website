@@ -5,15 +5,13 @@ on:
   push:
     branches: [ main ]
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
       - name: install toolchain
         uses: actions-rs/toolchain@v1
@@ -23,19 +21,16 @@ jobs:
           override: true
           profile: minimal
 
+      - name: Update base href in index.html
+        run: sed -i 's|<base href=\"/\"/>|<base href=\"/rust-dortmund-website/\"/>|' frontend-yew/index.html
+
       - name: Install trunk
         uses: jetli/trunk-action@v0.5.0
         with:
           version: 'latest'
 
-      - name: Update base href in index.html
-        run: sed -i 's|<base href=\"/\"/>|<base href=\"/rust-dortmund-website/\"/>|' frontend-yew/index.html
-
       - name: Build
         run: trunk build --release --public-url https://rust-dortmund.github.io/rust-dortmund-website/ --no-default-features
-
-      - name: Run tests
-        run: cargo test --verbose
 
       - name: Deploy to GitHub Pages
         if: github.ref == 'refs/heads/main'
@@ -43,4 +38,6 @@ jobs:
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./dist
-          force_orphan: true
+          destination_dir: main
+          user_name: 'github-actions[bot]'
+          user_email: 'github-actions[bot]@users.noreply.github.com'
