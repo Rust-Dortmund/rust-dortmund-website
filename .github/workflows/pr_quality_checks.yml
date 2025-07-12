@@ -1,0 +1,50 @@
+name: PR Quality Check
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+
+jobs:
+  check-pr-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+          profile: minimal
+
+      - name: Format Check
+        id: format
+        run: cargo fmt --check
+        continue-on-error: true
+
+      - name: Clippy Lints
+        id: clippy
+        run: RUSTFLAGS="-D warnings" cargo clippy --workspace
+        continue-on-error: true 
+
+      - name: Run tests
+        id: tests
+        run: cargo test --workspace
+        continue-on-error: true
+
+      - name: Fail if any step failed
+        if: |
+          steps.format.outcome == 'failure' ||
+          steps.clippy.outcome == 'failure' ||
+          steps.tests.outcome == 'failure'
+        run: |
+          echo "Formatting: ${{ steps.format.outcome }}"
+          echo "Clippy: ${{ steps.clippy.outcome }}"
+          echo "Tests: ${{ steps.tests.outcome }}"
+          exit 1

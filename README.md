@@ -5,7 +5,7 @@ A website for the Rust IRL Meetup Dortmund, built with [Yew](https://yew.rs/) an
 For now the website completely uses client side rendering (CSR). That means the website is static and can be deployed
 by simply copying the files in the `dist` folder.
 
-To see a live version visit: https://rust-dortmund.github.io/rust-dortmund-website/
+To see a live version visit: https://rust-dortmund.de
 
 ## Installation
 
@@ -51,10 +51,20 @@ Unless overwritten, the output will be located in the `dist` directory.
 
 ## How to Contribute
 
+To contribute to the Rust Dortmund Community Website you shall use a PR workflow. 
+
+0. See if you want to work on an open issue or if you want to raise a new one for discussion.
+1. Clone the Repository.
+2. Create your own branch, e.g. `new-feature`.
+3. When finished with your contribution: Push that branch.
+4. Open the GitHub page and create a PR for review.
+
+For the PR to be merged it has to be reviewed and approved by either Tim or Jan.
+
+### I want to start a Community project
+
 Reach out to Jan or Tim with your idea and we're happy to help you either with guidance or connecting you to the
 right people.
-
-In the meanwhile you may want to run it locally and tinker around.
 
 ## License
 

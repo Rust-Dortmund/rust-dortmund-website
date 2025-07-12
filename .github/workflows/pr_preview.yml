@@ -1,0 +1,55 @@
+# .github/workflows/preview.yml
+name: Deploy PR previews
+
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+      - closed
+
+jobs:
+  deploy-preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: install toolchain
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: stable
+          target: wasm32-unknown-unknown
+          override: true
+          profile: minimal
+
+      - name: Get PR Number
+        id: get-pr-number
+        run: |
+          pull_number=$(jq --raw-output .pull_request.number "$GITHUB_EVENT_PATH")
+          echo "pull_number=$pull_number" >> $GITHUB_OUTPUT            
+
+      - name: Update base href in index.html
+        run: sed -i 's|<base href=\"/\"/>|<base href=\"/pr-preview/pr-${{ steps.get-pr-number.outputs.pull_number }}/\"/>|' frontend-yew/index.html
+
+      - name: Install trunk
+        uses: jetli/trunk-action@v0.5.0
+        with:
+          version: 'latest'
+
+      - name: Build
+        run: trunk build --release --public-url https://rust-dortmund.de/pr-preview/pr-${{ steps.get-pr-number.outputs.pull_number }} --no-default-features
+
+      - name: Deploy preview
+        id: deploy_preview
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: ./dist
+          pages-base-url: rust-dortmund.de
+
+      - name: Report Preview Deploy
+        run: |
+          echo "GitHub Pages Base-Url: ${{ steps.deploy_preview.outputs.pages-base-url }}"
+          echo "Preview visible at ${{ steps.deploy_preview.outputs.preview-url }}"
+          echo "Preview Path: ${{ steps.deploy_preview.outputs.preview-url-path }}"
