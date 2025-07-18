@@ -15,7 +15,7 @@ pub fn events() -> Vec<Event> {
                 description: "With Thorsten, we explore the technical implementation of secure messaging on mobile platforms, using Whisperfish — an independent native Signal client for Sailfish OS — as a case study.",
                 video_url: None,
                 slides_url: None,
-            }, Talk{ 
+            }, Talk{
                 title: "Modern Frontends with Rust & WebAssembly in a Typescript World",
                 speaker: "Jan Vaorin",
                 description: "Jan explored how Rust can complement modern frontend stacks and what this means for the future of web development. We'll dive into real-world use cases, tooling, and best practices and build our own frontend in the following workshop.",
