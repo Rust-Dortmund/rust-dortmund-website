@@ -26,24 +26,65 @@ body {
 
 .body {
   flex: 1 1 auto;
-  align-items: center;
   display: flex;
-  justify-content: center;
+  flex-direction: column; /* Stack content vertically */
+  align-items: center; /* Left-align content by default */
   background: linear-gradient(to bottom right, #682E1A, #E58339);
-  font-size: 1.5rem;
-  font-family:"Open Sans", sans-serif;
+  font-size: 1.2rem; /* Default for smartphones */
+  font-family: "Open Sans", sans-serif;
   font-optical-sizing: auto;
   font-weight: 500;
   font-style: normal;
+  text-align: left; /* Default text alignment to left */
+}
+
+/* Center specific elements (div, h1, h2, etc.) */
+.body div,
+.body h1,
+.body h2,
+.body h3,
+.body h4,
+.body h5,
+.body h6 {
+  text-align: center; /* Center text for these elements */
+  align-self: center; /* Center these elements horizontally within the flex container */
+}
+
+/* Center images, respecting inline width */
+.body img {
+  display: block; /* Ensure image behaves as a block for centering */
+  align-self: center; /* Center horizontally in flex container */
+  margin-left: auto; /* Fallback centering */
+  margin-right: auto; /* Fallback centering */
+  max-width: 25%; /* Prevent overflow on smaller screens */
+  height: auto; /* Maintain aspect ratio */
+  width: auto; /* Default to intrinsic width, allowing inline width to take precedence */
 }
 
 
+/* For main content width */
 main {
-  max-width: 700px;
+  max-width: 700px; /* Default for smartphones */
 }
 
-.logo {
-  height: 20em;
+/* For tablets (768px to 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .body {
+    font-size: 1.4rem; /* Slightly larger for tablets */
+  }
+  main {
+    max-width: 900px; /* Medium max-width for tablets */
+  }
+}
+
+/* For PCs (1024px and above) */
+@media (min-width: 1024px) {
+  .body {
+    font-size: 1.5rem; /* Larger for PCs */
+  }
+  main {
+    max-width: 1000px; /* Larger max-width for PCs */
+  }
 }
 
 .heart:after {
@@ -193,9 +234,7 @@ h1 + .subtitle {
   padding: 10px 20px;
   border-radius: 15px;
   border: 0px;
-}
-
-img {
-  width: min(500px, 100%);
-  height: auto;
+  display: inline-block;
+  align-self: center;
+  text-align: center;
 }

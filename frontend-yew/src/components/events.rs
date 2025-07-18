@@ -30,23 +30,22 @@ pub fn secure(prop: &Props) -> Html {
         {            event.talks.iter().map(|talk| {
                     html! {
                         <div class="talk">
-                <div>
-                            <h5>{ &talk.title } <br />{" - "} { &talk.speaker }
+                            <h3>{ &talk.title }</h3>
+                            <p>{" by "} { &talk.speaker }</p>
 
                             {if let Some(video_url) = &talk.video_url {
-                                html! {<a href={video_url.clone()} target="_blank">{ " Watch Video " }</a>}
+                                html! { <> {"- "} <a href={video_url.clone()} target="_blank">{ "Watch Video" }</a>{" -"} </>}
                                 } else {
-                                    html! { <span>{ "" }</span> }
+                                html! { <span>{ "" }</span> }
                             }
                             }
                             {if let Some(slides_url) = &talk.slides_url {
-                                html! {<a href={slides_url.clone()} target="_blank">{ " Slides " }</a>}
+                                html! {<> {"- "} <a href={slides_url.clone()} target="_blank">{ "Download Slides" }</a> {" -"}</> }
                                 } else {
-                                    html! { <span>{ "" }</span> }
+                                html! { <span>{ "" }</span> }
                             }
                             }
-                </h5>
-                        </div>
+
                         </div>
                 }
                 }
@@ -68,27 +67,30 @@ pub fn secure(prop: &Props) -> Html {
     };
     html! {
 
-        <div>
-            <h1>{ "Events Of Rust Dortmund IRL Meetup" }</h1>
+        <>
             <h2>{ &prop.event.title }</h2>
             <h3>{ date_text }</h3>
             <p>{ &prop.event.description }</p>
-        <p>
-            {
-                prop.event.talks.iter().map(|talk| {
-                    html! {
-                    <div>
-                            { format!(" {} - {} ",talk.title,talk.speaker) }
-                    </div>
-                    }
-                }).collect::<Html>()
-            }
-        </p>
-        <p>
-            <Link<Route> classes={classes!("btn")} to={Route::EventsRequest { id: prop.event.id as u16}}>
+        if prop.event.talks.is_empty() {
+            <p>{ "No information on talks." }</p>
+        } else {
+            <ul>
+                {
+                    prop.event.talks.iter().map(|talk| {
+                        html! {
+                        <li>
+                          <b>{talk.title}</b><br />{" by "}<u>{talk.speaker}</u>
+                        </li>
+                        }
+                    }).collect::<Html>()
+                }
+            </ul>
+        }
+            <div>
+                <Link<Route> classes={classes!("btn")} to={Route::EventsRequest { id: prop.event.id as u16}}>
                     { "View Event" }</Link<Route>>
-            </p>
-        </div>
+            </div>
+        </>
     }
 }
 
