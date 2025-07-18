@@ -10,11 +10,13 @@ use crate::events::events;
 
 #[function_component(NavBar)]
 pub fn navbar() -> Html {
-    let root: Option<Route> = use_route();
+    let active_route: Option<Route> = use_route();
     MainNavLinks::iter()
         .map(|link| {
             let route: Route = link.as_route();
-            let is_active = root.as_ref().is_some_and(|r| *r == route);
+            let is_active = active_route
+                .as_ref()
+                .is_some_and(|ar| link.contains_route(ar));
             html! {
                 <Link<Route> classes={classes!(if is_active { "active" } else { "" })} to={route}>
                     { link.to_string() }
@@ -42,18 +44,26 @@ impl MainNavLinks {
             MainNavLinks::Impressum => Route::Impressum,
         }
     }
+
+    pub fn contains_route(&self, route: &Route) -> bool {
+        match self {
+            MainNavLinks::Home => *route == Route::Home,
+            MainNavLinks::Events => matches!(
+                route,
+                Route::UpcomingEventListRequest | Route::EventsRequest { .. }
+            ),
+            MainNavLinks::Showcase => *route == Route::Showcase,
+            MainNavLinks::Impressum => *route == Route::Impressum,
+        }
+    }
 }
 
 #[derive(Clone, Routable, PartialEq)]
 pub enum Route {
     #[at("/")]
     Home,
-    #[at("/news")]
-    NewsListRequest,
     #[at("/showcase")]
     Showcase,
-    #[at("/news/:id")]
-    NewsRequest { id: u16 },
     #[at("/events")]
     UpcomingEventListRequest,
     #[at("/event/:id")]
@@ -72,12 +82,6 @@ pub fn switch(routes: Route) -> Html {
         Route::Home => html! {
         <><Home /></>},
         Route::Showcase => html! {<h1><Showcase /></h1> },
-        Route::NewsRequest { id } => html! {
-            <h1>{ format!("News {}",id) }</h1>
-        },
-        Route::NewsListRequest => html! {
-            <h1>{ "News List" }</h1>
-        },
         Route::EventsRequest { id } => html! {
             events().into_iter().filter(|e|{e.id == id as u32}).map(|event| {
                 html! {
