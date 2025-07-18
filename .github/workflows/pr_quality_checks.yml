@@ -35,7 +35,7 @@ jobs:
 
       - name: Run tests
         id: tests
-        run: cargo test --workspace
+        run: RUSTFLAGS="-D warnings" cargo test --workspace
         continue-on-error: true
 
       - name: Fail if any step failed
