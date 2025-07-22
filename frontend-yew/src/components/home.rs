@@ -18,7 +18,7 @@ pub fn home() -> Html {
             <Link<Route> classes={classes!("btn")} to={Route::UpcomingEventListRequest }>
                     { "View Events" }</Link<Route>>
         </div>
-            <img class="logo" src="./assets/rust.webp" alt="Rust Dortmund Meetup logo"  style="max-width:60vw;height:auto;border-radius:30px" />
+            <img src="./assets/rust.webp" alt="Rust Dortmund Meetup logo"  style="max-width:60vw;height:auto;border-radius:30px" />
             <br />
             <span class="subtitle">{ "This website is made in Dortmund with " }<span class="heart" />{" and "}<span class="crab" /></span>
         </>
