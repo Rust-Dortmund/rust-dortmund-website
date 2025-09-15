@@ -3,6 +3,30 @@ use crate::models::{Event, Talk};
 pub fn events() -> Vec<Event> {
     let mut events = vec![
         Event {
+            id: 5,
+            title: "Rust for Safety-Critical Software-Development and other high potential Use Cases".to_string(),
+            description: "This Rust Dortmund event is part of the digital week in Dortmund, focusing on safety-critical software development in domains such as automotive, aviation, and process industries, as well as other high-potential Rust use-cases like Serverless.".to_string(),
+            date: chrono::NaiveDate::from_ymd_opt(2025, 9, 3).unwrap(),
+            location: "Digitale Werkbank (Industrie Campus - Dortmund Hafen), Kanalstraße 25, 44147 Dortmund, Germany".to_string(),
+            image_url: "./assets/janPizza.jpg".to_string(),
+            talks: vec![
+                Talk {
+                    title: "Rust in the automotive industry: Developing safety-critical applications efficiently and qualitatively",
+                    speaker: "Christof Petig",
+                    description: "Christof highlights the advantages of Rust for developing safety-critical applications through several examples, showing how Rust enables higher quality in less time. He presents methods and technologies that make it possible to build safety-critical systems even with mixed programming languages.",
+                    video_url: None,
+                    slides_url: None,
+                },
+                Talk {
+                    title: "Why Serverless is the Best Choice for Your Next Greenfield Project",
+                    speaker: "Florian Lenz",
+                    description: "Florian explains the 'Serverless First' approach, showing how it enables teams to focus on features instead of infrastructure. He illustrates the benefits and tradeoffs of serverless with real-world examples like LEGO.com, Coca-Cola vending machines, and Amazon Prime Video.",
+                    video_url: None,
+                    slides_url: None,
+                },
+            ],
+        },
+        Event {
             id: 1,
             title: "Teach and Hack - Whisperfish into Frontend".to_string(),
             description: "".to_string(),
