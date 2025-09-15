@@ -95,7 +95,7 @@ pub fn switch(routes: Route) -> Html {
         </Suspense>
         </h1> },
         Route::Impressum => html! {<h1>
-            <a href="https://www.corgi.wiki/impressum" target="_blank" rel="noopener noreferrer">
+            <a href="https://janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
         { "Impressum" }
             </a>
             <br />
