@@ -94,10 +94,17 @@ pub fn switch(routes: Route) -> Html {
         <RequestTest />
         </Suspense>
         </h1> },
-        Route::Impressum => html! {<h1>
-            <a href="https://www.corgi.wiki/impressum" target="_blank" rel="noopener noreferrer">
-        { "Impressum" }
-            </a>
-        </h1> },
+        Route::Impressum => html! {
+            <div>
+              <h1>
+               <a href="https://janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
+               { "Impressum" }
+               </a>
+               <a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
+               { "Code Of Coduct" }
+               </a>
+            
+             </h1>
+            </div>},
     }
 }
