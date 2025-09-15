@@ -1,31 +1,31 @@
-use strum::IntoEnumIterator;
-use yew::Html;
-use yew::prelude::*;
-use yew_router::prelude::*;
+use strum : : IntoEnumIterator;
+use yew : : Html;
+use yew : : prelude : : *;
+use yew_router : : prelude : : *;
 
-use crate::components::events::{RequestTest, SingleEvent};
-use crate::components::showcase::Showcase;
-use crate::components::{events::Upcoming, home::Home};
-use crate::events::events;
+use crate : : components : : events : :{RequestTest,SingleEvent};
+use crate : : components : : showcase : : Showcase;
+use crate : : components : :{events : : Upcoming,home : : Home};
+use crate : : events : : events;
 
 #[function_component(NavBar)]
-pub fn navbar() -> Html {
-    let root: Option<Route> = use_route();
-    MainNavLinks::iter()
-        .map(|link| {
-            let route: Route = link.as_route();
-            let is_active = root.as_ref().is_some_and(|r| *r == route);
-            html! {
-                <Link<Route> classes={classes!(if is_active { "active" } else { "" })} to={route}>
-                    { link.to_string() }
-                </Link<Route>>
-            }
-        })
-        .collect::<Html>()
+pub fn navbar()- > Html{
+    let root : Option < Route > = use_route();
+    MainNavLinks : : iter()
+    .map(| link |{
+        let route : Route = link.as_route();
+        let is_active = root.as_ref().is_some_and(| r | * r = = route);
+        html !{
+             < Link < Route > classes ={classes !(if is_active{"active"}else{""})}to ={route}> 
+            {link.to_string()}
+             < / Link < Route > > 
+        }
+    })
+    .collect : : < Html >()
 }
 
-#[derive(Clone, Default, Debug, Eq, PartialEq, strum::EnumIter, strum::Display)]
-pub enum MainNavLinks {
+#[derive(Clone,Default,Debug,Eq,PartialEq,strum : : EnumIter,strum : : Display)]
+pub enum MainNavLinks{
     #[default]
     Home,
     Events,
@@ -33,78 +33,77 @@ pub enum MainNavLinks {
     Impressum,
 }
 
-impl MainNavLinks {
-    pub fn as_route(&self) -> Route {
-        match self {
-            MainNavLinks::Home => Route::Home,
-            MainNavLinks::Events => Route::UpcomingEventListRequest,
-            MainNavLinks::Showcase => Route::Showcase,
-            MainNavLinks::Impressum => Route::Impressum,
+impl MainNavLinks{
+    pub fn as_route(& self)- > Route{
+        match self{
+            MainNavLinks : : Home = > Route : : Home,
+            MainNavLinks : : Events = > Route : : UpcomingEventListRequest,
+            MainNavLinks : : Showcase = > Route : : Showcase,
+            MainNavLinks : : Impressum = > Route : : Impressum,
         }
     }
 }
 
-#[derive(Clone, Routable, PartialEq)]
-pub enum Route {
-    #[at("/")]
+#[derive(Clone,Routable,PartialEq)]
+pub enum Route{
+    #[at(" / ")]
     Home,
-    #[at("/news")]
+    #[at(" / news")]
     NewsListRequest,
-    #[at("/showcase")]
+    #[at(" / showcase")]
     Showcase,
-    #[at("/news/:id")]
-    NewsRequest { id: u16 },
-    #[at("/events")]
+    #[at(" / news / : id")]
+    NewsRequest{id : u16},
+    #[at(" / events")]
     UpcomingEventListRequest,
-    #[at("/event/:id")]
-    EventsRequest { id: u16 },
-    #[at("/test")]
+    #[at(" / event / : id")]
+    EventsRequest{id : u16},
+    #[at(" / test")]
     Test,
     #[not_found]
-    #[at("/404")]
+    #[at(" / 404")]
     NotFound,
-    #[at("/impressum")]
+    #[at(" / impressum")]
     Impressum,
 }
 
-pub fn switch(routes: Route) -> Html {
-    match routes {
-        Route::Home => html! {
-        <><Home /></>},
-        Route::Showcase => html! {<h1><Showcase /></h1> },
-        Route::NewsRequest { id } => html! {
-            <h1>{ format!("News {}",id) }</h1>
-        },
-        Route::NewsListRequest => html! {
-            <h1>{ "News List" }</h1>
-        },
-        Route::EventsRequest { id } => html! {
-            events().into_iter().filter(|e|{e.id == id as u32}).map(|event| {
-                html! {
-                    <SingleEvent  event={event} />
-                }
-            }).collect::<Html>()
-        },
-        Route::UpcomingEventListRequest => html! {
-            <Upcoming />
-        },
-        Route::NotFound => html! { <h1>{ "404" }</h1> },
-        Route::Test => html! {<h1>
-        <Suspense fallback={html! {<h1>{ "Loading..." }</h1>}}>
-        <RequestTest />
-        </Suspense>
-        </h1> },
-        Route::Impressum => html! {
-            <div>
-              <h1>
-               <a href="https://janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
-               { "Impressum" }
-               </a>
-               <a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
-               { "Code Of Coduct" }
-               </a>
-            
-             </h1>
-            </div>},
-    }
-}
+pub fn switch(routes : Route)- > Html{
+    match routes{
+        Route : : Home = > html !{
+             < > < Home / > < / >},
+            Route : : Showcase = > html !{< h1 > < Showcase / > < / h1 >},
+            Route : : NewsRequest{id}= > html !{
+                 < h1 >{format !("News{}",id)}< / h1 > 
+            },
+            Route : : NewsListRequest = > html !{
+                 < h1 >{"News List"}< / h1 > 
+            },
+            Route : : EventsRequest{id}= > html !{
+                events().into_iter().filter(| e |{e.id = = id as u32}).map(| event |{
+                    html !{
+                         < SingleEvent event ={event}/ > 
+                    }
+                }).collect : : < Html >()
+            },
+            Route : : UpcomingEventListRequest = > html !{
+                 < Upcoming / > 
+            },
+            Route : : NotFound = > html !{< h1 >{"404"}< / h1 >},
+            Route : : Test = > html !{< h1 > 
+             < Suspense fallback ={html !{< h1 >{"Loading..."}< / h1 >}}> 
+             < RequestTest / > 
+             < / Suspense > 
+             < / h1 >},
+            Route : : Impressum = > html !{
+                 < div > 
+                 < h1 > 
+                 < a href = "https :  //janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
+                {"Impressum"}
+                 < / a > 
+                 < a href = "https :  //www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
+                {"Code Of Coduct"}
+                 < / a > 
+                 < / h1 > 
+                 < / div >},
+            }
+        }
