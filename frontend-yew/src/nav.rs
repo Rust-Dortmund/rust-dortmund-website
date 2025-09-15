@@ -1,6 +1,6 @@
 use strum::IntoEnumIterator;
-use yew::prelude::*;
 use yew::Html;
+use yew::prelude::*;
 use yew_router::prelude::*;
 
 use crate::components::events::{RequestTest, SingleEvent};
@@ -16,11 +16,8 @@ pub fn navbar() -> Html {
             let route: Route = link.as_route();
             let is_active = root.as_ref().is_some_and(|r| *r == route);
             html! {
-                <Link<Route>
-                    classes={classes!(if is_active { "active" } else { "" })}
-                    to={route}
-                >
-                    {link.to_string()}
+                <Link<Route> classes={classes!(if is_active { "active" } else { "" })} to={route}>
+                    { link.to_string() }
                 </Link<Route>>
             }
         })
@@ -73,47 +70,38 @@ pub enum Route {
 pub fn switch(routes: Route) -> Html {
     match routes {
         Route::Home => html! {
-            <Home />
-        },
-        Route::Showcase => html! {
-            <h1><Showcase /></h1>
-        },
+        <><Home /></>},
+        Route::Showcase => html! {<h1><Showcase /></h1> },
         Route::NewsRequest { id } => html! {
-            <h1>{format!("News {}", id)}</h1>
+            <h1>{ format!("News {}",id) }</h1>
         },
         Route::NewsListRequest => html! {
-            <h1>{"News List"}</h1>
+            <h1>{ "News List" }</h1>
         },
         Route::EventsRequest { id } => html! {
-            {for events().into_iter()
-                .filter(|e| e.id == id as u32)
-                .map(|event| html! { <SingleEvent event={event}/> })}
+            events().into_iter().filter(|e|{e.id == id as u32}).map(|event| {
+                html! {
+                    <SingleEvent  event={event} />
+                }
+            }).collect::<Html>()
         },
         Route::UpcomingEventListRequest => html! {
             <Upcoming />
         },
-        Route::NotFound => html! {
-            <h1>{"404"}</h1>
-        },
-        Route::Test => html! {
-            <h1>
-                <Suspense fallback={html! {<h1>{"Loading..."}</h1>}}>
-                    <RequestTest />
-                </Suspense>
-            </h1>
-        },
-        Route::Impressum => html! {
-            <div>
-                <h1>
-                    <a href="https://janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
-                        {"Impressum"}
-                    </a>
-                    <br>
-                    <a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
-                        {"Code Of Conduct"}
-                    </a>
-                </h1>
-            </div>
-        },
+        Route::NotFound => html! { <h1>{ "404" }</h1> },
+        Route::Test => html! {<h1>
+        <Suspense fallback={html! {<h1>{ "Loading..." }</h1>}}>
+        <RequestTest />
+        </Suspense>
+        </h1> },
+        Route::Impressum => html! {<h1>
+            <a href="https://www.corgi.wiki/impressum" target="_blank" rel="noopener noreferrer">
+        { "Impressum" }
+            </a>
+            <br />
+            <a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
+        { "Code of Conduct" }
+            </a>
+        </h1> },
     }
 }
