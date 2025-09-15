@@ -108,6 +108,7 @@ pub fn switch(routes: Route) -> Html {
                     <a href="https://janus.rs/en/impressum/" target="_blank" rel="noopener noreferrer">
                         {"Impressum"}
                     </a>
+                    <br>
                     <a href="https://www.rust-lang.org/policies/code-of-conduct" target="_blank" rel="noopener noreferrer">
                         {"Code Of Conduct"}
                     </a>
