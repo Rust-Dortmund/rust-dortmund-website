@@ -3,6 +3,21 @@ use crate::models::{Event, Talk};
 pub fn events() -> Vec<Event> {
     let mut events = vec![
         Event {
+    id: 11,
+    title: "Teach and Hack at Projektspeicher".to_string(),
+    description: "A hybrid Teach and Hack evening focused on data, geometry, and visualization with Rust: a talk on error bars and geometry, followed by a hands-on workshop on calculations and visualizations.".to_string(),
+    date: chrono::NaiveDate::from_ymd_opt(2026, 7, 15).unwrap(),
+    location: "Projektspeicher, Speicherstr. 33, Dortmund, Germany".to_string(),
+    image_url: "./assets/janPizza.jpg".to_string(),
+    talks: vec![Talk {
+        title: "Error Bars and Geometry in Rust with ndarray and Plotters",
+        speaker: "Günther Beulen",
+        description: "Günther shows how to handle measurement uncertainty and geometric computation in Rust, using ndarray for the numerics and Plotters for rendering the results.",
+        video_url: None,
+        slides_url: None,
+    }],
+        },
+        Event {
             id: 10,
             title: "Rust Dortmund Meetup - Agentic Programming - May".to_string(),
             description: "A hybrid meetup focused on Agentic Programming: how AI coding agents and Rust fit together, and how strong test suites keep agents in check.".to_string(),
