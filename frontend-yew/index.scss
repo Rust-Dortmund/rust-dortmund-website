@@ -237,4 +237,250 @@ h1 + .subtitle {
   display: inline-block;
   align-self: center;
   text-align: center;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.btn:hover {
+  background: #f0964f;
+  transform: translateY(-1px);
+}
+
+/* Events overview grid */
+.events-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+  width: 100%;
+  align-self: stretch;
+}
+
+@media (min-width: 768px) {
+  .events-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (min-width: 1024px) {
+  .events-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.event-card {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.event-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.event-card-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  align-self: stretch;
+  flex: 0 0 auto;
+}
+
+.event-detail-image {
+  width: 100%;
+  height: 280px;
+  align-self: stretch;
+  overflow: hidden;
+}
+
+.event-card-image img,
+.event-detail-image img {
+  width: 100%;
+  height: 100%;
+  max-width: 100%;
+  min-width: 100%;
+  min-height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  margin: 0;
+}
+
+@media (min-width: 768px) {
+  .event-detail-image {
+    height: 360px;
+  }
+}
+
+.event-card-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  text-align: left;
+  gap: 10px;
+  padding: 18px 20px 22px;
+  flex: 1 1 auto;
+}
+
+.event-card-body h2 {
+  margin: 0;
+  text-align: left;
+  align-self: stretch;
+  font-size: 1.15rem;
+}
+
+.event-card-description {
+  margin: 0;
+  font-size: 0.95rem;
+  opacity: 0.85;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.event-card-meta {
+  margin: 0;
+  font-size: 0.85rem;
+  opacity: 0.7;
+}
+
+.event-card-body .btn {
+  margin-top: auto;
+  align-self: flex-start;
+}
+
+.event-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-transform: uppercase;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.event-badge.upcoming {
+  background: #E58339;
+  color: #fff;
+}
+
+.event-badge.past {
+  background: rgba(255, 255, 255, 0.15);
+  color: #fff;
+  opacity: 0.8;
+}
+
+/* Single event detail page */
+.event-detail {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  align-items: stretch;
+  text-align: left;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 20px;
+  overflow: hidden;
+  margin-bottom: 30px;
+}
+
+.event-detail-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-self: stretch;
+  text-align: left;
+  gap: 14px;
+  padding: 24px 28px 32px;
+}
+
+.event-detail-body h1 {
+  margin: 0;
+  text-align: left;
+  align-self: stretch;
+}
+
+.event-description,
+.event-location {
+  margin: 0;
+}
+
+.event-location {
+  opacity: 0.85;
+  font-size: 0.95rem;
+}
+
+.talks-list {
+  display: flex;
+  flex-direction: column;
+  align-self: stretch;
+  gap: 16px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.talk-card {
+  background: rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 12px;
+  padding: 16px 18px;
+  align-self: stretch;
+  text-align: left;
+}
+
+.talk-card h3 {
+  margin: 0 0 4px;
+  text-align: left;
+  align-self: stretch;
+  font-size: 1.05rem;
+}
+
+.talk-speaker {
+  margin: 0 0 8px;
+  font-size: 0.85rem;
+  opacity: 0.75;
+  font-style: italic;
+}
+
+.talk-description {
+  margin: 0 0 10px;
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.talk-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.talk-link {
+  display: inline-block;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.12);
+  color: #fff;
+  text-decoration: none;
+  transition: background 0.2s ease;
+}
+
+.talk-link:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.event-detail-back {
+  margin-top: 10px;
 }

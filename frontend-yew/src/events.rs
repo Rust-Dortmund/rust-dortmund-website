@@ -8,7 +8,7 @@ pub fn events() -> Vec<Event> {
     description: "A hybrid Teach and Hack evening focused on data, geometry, and visualization with Rust: a talk on error bars and geometry, followed by a hands-on workshop on calculations and visualizations.".to_string(),
     date: chrono::NaiveDate::from_ymd_opt(2026, 7, 15).unwrap(),
     location: "Projektspeicher, Speicherstr. 33, Dortmund, Germany".to_string(),
-    image_url: "./assets/janPizza.jpg".to_string(),
+    image_url: "./assets/rus2.jpg".to_string(),
     talks: vec![Talk {
         title: "Error Bars and Geometry in Rust with ndarray and Plotters",
         speaker: "Günther Beulen",
@@ -23,7 +23,7 @@ pub fn events() -> Vec<Event> {
             description: "A hybrid meetup focused on Agentic Programming: how AI coding agents and Rust fit together, and how strong test suites keep agents in check.".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2026, 5, 26).unwrap(),
             location: "Conciso GmbH - Workgarden, Pariser Bogen 7, 44269 Dortmund, Germany".to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rus1.jpg".to_string(),
             talks: vec![
                 Talk {
                     title: "Rust for Agentic Programming - Workflows and Guardrails",
@@ -47,7 +47,7 @@ pub fn events() -> Vec<Event> {
             description: "A meetup focused on Embedded Rust, run as a hybrid event together with the Rust and C++ Dragons (formerly Rust Cardiff). Followed up by a 4h on-site hands-on workshop on 2026-04-29.".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2026, 3, 18).unwrap(),
             location: "Adesso New Building, Freie Vogel Straße 383, 44269 Dortmund, Germany".to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rus3.jpg".to_string(),
             talks: vec![
                 Talk {
                     title: "Intro to Embedded Rust",
@@ -86,7 +86,7 @@ pub fn events() -> Vec<Event> {
             description: "An evening of learning, collaboration, and community building, including lightning talks.".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2025, 12, 8).unwrap(),
             location: "viadee Unternehmensberatung AG, Sebrathweg 7, 44149 Dortmund, Germany".to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rustdo.avif".to_string(),
             talks: vec![
                 Talk {
                     title: "Decompiling Mario",
@@ -113,7 +113,7 @@ pub fn events() -> Vec<Event> {
             description: "".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2025, 10, 29).unwrap(),
             location: "adesso SE, Adessoplatz 1, 44269 Dortmund, Germany".to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rustdo.avif".to_string(),
             talks: vec![],
         },
         Event {
@@ -122,7 +122,7 @@ pub fn events() -> Vec<Event> {
             description: "This Rust Dortmund event is part of the digital week in Dortmund, focusing on safety-critical software development in domains such as automotive, aviation, and process industries, as well as other high-potential Rust use-cases like Serverless.".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2025, 9, 3).unwrap(),
             location: "Digitale Werkbank (Industrie Campus - Dortmund Hafen), Kanalstraße 25, 44147 Dortmund, Germany".to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rustdortmund.avif".to_string(),
             talks: vec![
                 Talk {
                     title: "Rust in the automotive industry: Developing safety-critical applications efficiently and qualitatively",
@@ -168,7 +168,7 @@ pub fn events() -> Vec<Event> {
             date: chrono::NaiveDate::from_ymd_opt(2025, 5, 20).unwrap(),
             location: "Dortmund, Germany -  Digitale Werkbank, Kanalstraße 25, 44147 Dortmund"
                 .to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rus1.jpg".to_string(),
             talks: vec![
                 Talk {
                     title: "Beyond Javascript -- Writing a Web Application Full Stack with Rust",
@@ -194,7 +194,7 @@ pub fn events() -> Vec<Event> {
             location:
                 "Dortmund, Germany -Otto-Hahn-Straße 12,44227 Dortmund,Raum 2.063 - 2nd floor "
                     .to_string(),
-            image_url: "./assets/janPizza.jpg".to_string(),
+            image_url: "./assets/rus2.jpg".to_string(),
             talks: vec![Talk {
                 title: "Rust Introductino for Java Developers into an axum Workshop",
                 speaker: "Timo Kösters",
@@ -209,7 +209,7 @@ pub fn events() -> Vec<Event> {
             description: "".to_string(),
             date: chrono::NaiveDate::from_ymd_opt(2024, 11, 27).unwrap(),
             location: "".to_string(),
-            image_url: "".to_string(),
+            image_url: "./assets/rustdo.avif".to_string(),
             talks: vec![Talk {
                 title: " k23 - A secure next-generation OS through WASM",
                 speaker: "Jonas Kruckenberg",

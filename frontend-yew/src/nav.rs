@@ -31,7 +31,6 @@ pub enum MainNavLinks {
     #[default]
     Home,
     Events,
-    Showcase,
     Impressum,
 }
 
@@ -40,7 +39,6 @@ impl MainNavLinks {
         match self {
             MainNavLinks::Home => Route::Home,
             MainNavLinks::Events => Route::UpcomingEventListRequest,
-            MainNavLinks::Showcase => Route::Showcase,
             MainNavLinks::Impressum => Route::Impressum,
         }
     }
@@ -52,7 +50,6 @@ impl MainNavLinks {
                 route,
                 Route::UpcomingEventListRequest | Route::EventsRequest { .. }
             ),
-            MainNavLinks::Showcase => *route == Route::Showcase,
             MainNavLinks::Impressum => *route == Route::Impressum,
         }
     }

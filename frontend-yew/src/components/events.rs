@@ -11,47 +11,73 @@ pub struct Props {
     pub event: Event,
 }
 
+fn event_status(event: &Event) -> (bool, String) {
+    let is_upcoming = event.date > chrono::Local::now().naive_local().date();
+    let label = if is_upcoming {
+        format!("Upcoming · {}", event.date)
+    } else {
+        format!("Past · {}", event.date)
+    };
+    (is_upcoming, label)
+}
+
 #[function_component(SingleEvent)]
 pub fn secure(prop: &Props) -> Html {
     let event = &prop.event;
-    let is_upcoming_event = prop.event.date > chrono::Local::now().naive_local().date();
-    let date_text = if is_upcoming_event {
-        format!("Upcoming Event: {}", prop.event.date)
-    } else {
-        format!("Past Event: {}", prop.event.date)
-    };
+    let (is_upcoming, status_label) = event_status(event);
+
     html! {
-        <div>
-            <img class="event-image" src={event.image_url.clone()} />
-            <div class="event" key={event.id}>
-                <h2>{ &event.title }</h2>
-                <p>{ &event.description }</p>
-                <p>{ &date_text }</p>
-        {            event.talks.iter().map(|talk| {
-                    html! {
-                        <div class="talk">
-                            <h3>{ &talk.title }</h3>
-                            <p>{" by "} { &talk.speaker }</p>
-
-                            {if let Some(video_url) = &talk.video_url {
-                                html! { <> {"- "} <a href={video_url.clone()} target="_blank">{ "Watch Video" }</a>{" -"} </>}
-                                } else {
-                                html! { <span>{ "" }</span> }
-                            }
-                            }
-                            {if let Some(slides_url) = &talk.slides_url {
-                                html! {<> {"- "} <a href={slides_url.clone()} target="_blank">{ "Download Slides" }</a> {" -"}</> }
-                                } else {
-                                html! { <span>{ "" }</span> }
-                            }
-                            }
-
-                        </div>
-                }
-                }
-        ).collect::<Html>()
+        <div class="event-detail" key={event.id}>
+            if !event.image_url.is_empty() {
+                <div class="event-detail-image">
+                    <img src={event.image_url.clone()} alt={event.title.clone()} />
+                </div>
             }
-                <p>{ format!("Location: {}", event.location) }</p>
+            <div class="event-detail-body">
+                <span class={classes!("event-badge", if is_upcoming { "upcoming" } else { "past" })}>
+                    { status_label }
+                </span>
+                <h1>{ &event.title }</h1>
+                if !event.description.is_empty() {
+                    <p class="event-description">{ &event.description }</p>
+                }
+                if !event.location.is_empty() {
+                    <p class="event-location">{ "📍 " }{ &event.location }</p>
+                }
+                if !event.talks.is_empty() {
+                    <div class="talks-list">
+                        { event.talks.iter().map(|talk| {
+                            html! {
+                                <div class="talk-card">
+                                    <h3>{ &talk.title }</h3>
+                                    <p class="talk-speaker">{ "by " }{ &talk.speaker }</p>
+                                    if !talk.description.is_empty() {
+                                        <p class="talk-description">{ &talk.description }</p>
+                                    }
+                                    if talk.video_url.is_some() || talk.slides_url.is_some() {
+                                        <div class="talk-links">
+                                            if let Some(video_url) = &talk.video_url {
+                                                <a class="talk-link" href={video_url.clone()} target="_blank" rel="noopener noreferrer">
+                                                    { "▶ Watch Video" }
+                                                </a>
+                                            }
+                                            if let Some(slides_url) = &talk.slides_url {
+                                                <a class="talk-link" href={slides_url.clone()} target="_blank" rel="noopener noreferrer">
+                                                    { "📄 Slides" }
+                                                </a>
+                                            }
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }).collect::<Html>() }
+                    </div>
+                }
+                <div class="event-detail-back">
+                    <Link<Route> classes={classes!("btn")} to={Route::UpcomingEventListRequest}>
+                        { "← All Events" }
+                    </Link<Route>>
+                </div>
             </div>
         </div>
     }
@@ -59,55 +85,55 @@ pub fn secure(prop: &Props) -> Html {
 
 #[function_component(SingleEventSmall)]
 pub fn secure(prop: &Props) -> Html {
-    let is_upcoming_event = prop.event.date > chrono::Local::now().naive_local().date();
-    let date_text = if is_upcoming_event {
-        format!("Upcoming Event: {}", prop.event.date)
-    } else {
-        format!("Past Event: {}", prop.event.date)
-    };
-    html! {
+    let event = &prop.event;
+    let (is_upcoming, status_label) = event_status(event);
+    let speakers = event
+        .talks
+        .iter()
+        .map(|talk| talk.speaker)
+        .collect::<Vec<_>>()
+        .join(", ");
 
-        <>
-            <h2>{ &prop.event.title }</h2>
-            <h3>{ date_text }</h3>
-            <p>{ &prop.event.description }</p>
-        if prop.event.talks.is_empty() {
-            <p>{ "No information on talks." }</p>
-        } else {
-            <ul>
-                {
-                    prop.event.talks.iter().map(|talk| {
-                        html! {
-                        <li>
-                          <b>{talk.title}</b><br />{" by "}<u>{talk.speaker}</u>
-                        </li>
-                        }
-                    }).collect::<Html>()
+    html! {
+        <div class="event-card">
+            if !event.image_url.is_empty() {
+                <div class="event-card-image">
+                    <img src={event.image_url.clone()} alt={event.title.clone()} loading="lazy" />
+                </div>
+            }
+            <div class="event-card-body">
+                <span class={classes!("event-badge", if is_upcoming { "upcoming" } else { "past" })}>
+                    { status_label }
+                </span>
+                <h2>{ &event.title }</h2>
+                if !event.description.is_empty() {
+                    <p class="event-card-description">{ &event.description }</p>
                 }
-            </ul>
-        }
-            <div>
-                <Link<Route> classes={classes!("btn")} to={Route::EventsRequest { id: prop.event.id as u16}}>
-                    { "View Event" }</Link<Route>>
+                if event.talks.is_empty() {
+                    <p class="event-card-meta">{ "No talk details available yet." }</p>
+                } else {
+                    <p class="event-card-meta">
+                        { format!("{} talk{} · {}", event.talks.len(), if event.talks.len() == 1 { "" } else { "s" }, speakers) }
+                    </p>
+                }
+                <Link<Route> classes={classes!("btn")} to={Route::EventsRequest { id: event.id as u16}}>
+                    { "View Event" }
+                </Link<Route>>
             </div>
-        </>
+        </div>
     }
 }
 
 #[function_component(Upcoming)]
 pub fn secure() -> Html {
     let events = events();
-    events
-        .into_iter()
-        .map(|event| {
-            html! {
-                    <>
-                    <SingleEventSmall  event={event.clone()} />
-                    <hr />
-                    </>
-            }
-        })
-        .collect::<Html>()
+    html! {
+        <div class="events-grid">
+            { events.into_iter().map(|event| {
+                html! { <SingleEventSmall event={event} /> }
+            }).collect::<Html>() }
+        </div>
+    }
 }
 
 #[function_component(RequestTest)]
